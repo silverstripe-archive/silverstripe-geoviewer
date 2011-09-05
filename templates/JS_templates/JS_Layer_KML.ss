@@ -1,6 +1,7 @@
 var layer = null;
 
 layer = new OpenLayers.Layer.Vector('$ID', {
+ 	projection: new OpenLayers.Projection("$EPSGCode"),
 	strategies: [new OpenLayers.Strategy.Fixed()],
 	protocol: new OpenLayers.Protocol.HTTP({
 		
