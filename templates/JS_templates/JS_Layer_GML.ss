@@ -1,6 +1,6 @@
 var layer = null;
 
-layer = new OpenLayers.Layer.GML('$ID', "$FileName")
+layer = new OpenLayers.Layer.GML('$ID', '$FileName')
 
 this.getOLMap().addLayer(layer);
 
