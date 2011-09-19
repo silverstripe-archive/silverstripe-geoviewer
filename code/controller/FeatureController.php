@@ -215,7 +215,6 @@ class Feature_Controller extends Controller {
 		$vData->customise( array(
 			"Items" => $items
 		));
-
 		return $vData->renderWith( self::get_template_name($action) );
 	}	
 	
@@ -264,6 +263,7 @@ class Feature_Controller extends Controller {
 			'featureID' => $featureIDs
 		);
 		
+		// get commend, i.e., GeoserverWFS_GetFeature
 		$commandName = $layer->getActionName($action);
 		$cmd = $this->getCommand($commandName, $data);
 
@@ -273,26 +273,33 @@ class Feature_Controller extends Controller {
 		$obj = new DataObjectSet();
 		
 		if (strpos($result,'java.lang.NullPointerException') === false) {
+			$featureTypeObj = DataObject::get_one("FeatureType",sprintf("\"Name\" = '%s' AND \"LayerID\" = '%s'", Convert::raw2sql($featureType),$layer->ID));			
 			
 			$json = json_decode($result, true);
 			$features = array();
+			$featureArray = array();
+
 			if (isset($json['features'])) {
 				$features = $json['features'];
 			}
-			
+						
 			// convert feature properties into a template data structure
-			if($features[0]['properties']) foreach($features[0]['properties'] as $key => $val){
-				$obj->push(new ArrayData(array(
-					'attributeName' => $key,
-					'attributeValue' => $val
-				)));
+			if($features[0]['properties']) {
+				foreach($features[0]['properties'] as $key => $val) {
+					$obj->push(new ArrayData(array(
+						'attributeName' => $key,
+						'attributeValue' => $val
+					)));
+				}
+				$featureArray = $features[0]['properties'];
 			}
 
 			$viewableData->customise( array(
 				"Layer" => $layer,
 				"FeatureTypes" => $layer->FeatureTypes(),
 				"Items" => $obj,
-				"Features" => $featureIDs
+				"Feature" => new ArrayData($featureArray),
+				"FeatureIDs" => $featureIDs
 			));
 
 		} else {
@@ -300,6 +307,15 @@ class Feature_Controller extends Controller {
 				"Message" => 'A web-server error has occurred. Please try again.'
 			));
 		}
+		
+		$template = $featureTypeObj->FeatureTypeTemplate;
+		
+		// if a template in the CMS is defined, use the template insteat of the default template.
+		if ($template) {
+			$viewer = SSViewer::fromString($template);
+			return $viewableData->renderWith( $viewer );
+		}
+		
 		return $viewableData->renderWith( self::get_template_name($action) );
 	}
 }
