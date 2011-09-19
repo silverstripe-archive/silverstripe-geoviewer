@@ -15,7 +15,8 @@ class FeatureType extends DataObject {
 	
 	static $db = array(
 		"Namespace" => "Varchar(128)",
-		"Name" => "Varchar(256)"
+		"Name" => "Varchar(256)",
+		"FeatureTypeTemplate" => "Text"
 	);
 	
 	static $has_one = array(
@@ -82,7 +83,9 @@ class FeatureType extends DataObject {
 		$controller = Controller::curr();
 		$link = Controller::join_links($controller->Link());
 
-		Requirements::javascript(MapObject::get_module_path().'javascript/FeatureType.js');	
+		$presenter = singleton(MapControllerExtension::get_map_presenter_class());		
+
+		Requirements::javascript($presenter->getModulePath().'javascript/FeatureType.js');	
 
 		$tableField = $this->getLabelTableField();
 		$fields->addFieldsToTab("Root.Labels", 
