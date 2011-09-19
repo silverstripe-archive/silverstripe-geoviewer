@@ -3,7 +3,7 @@
 <% else %>
 <div class='featureInfoContent'>
 	<h2>$Layer.Title</h2>	
-	<h4>Features: $Features</h4>
+	<h4>Feature: $FeatureIDs</h4>
 	<ul>
 	<% control Items %>
 		<li>$attributeName : $attributeValue</li>
