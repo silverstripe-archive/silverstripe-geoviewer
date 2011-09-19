@@ -109,6 +109,31 @@ class MapObject extends DataObject {
 			$storage->Enable = true;
 			$storage->write();
 
+			$category = new LayerCategory();
+			$category->Title = 'Points of Interests';
+			$category->Sort = 1;
+			$category->write();
+			
+			$featureType = new FeatureType();
+			$featureType->Namespace = 'tiger';
+			$featureType->Name = 'poi';
+			$featureType->FeatureTypeTemplate = <<<HTML
+<% if Message %>
+<div class='message'>\$Message</div>
+<% else %>
+<div class='featureInfoContent'>
+	<h2>\$Layer.Title</h2>	
+	<h4>Features: \$FeatureIDs</h4>
+	<ul>
+		<li>Name : <strong>\$Feature.NAME</strong></li>
+		<li>Thumb : \$Feature.THUMBNAIL</li>
+		<li>Website : <a href="\$Feature.MAINPAGE" _target="test">Website</a></li>
+	</ul>
+</div>
+<% end_if %>
+HTML;
+			$featureType->write();
+			
 			$layer = new Layer_GeoserverWMS();
 			$layer->Title = 'New York - Demo';
 			$layer->Enabled = true;
@@ -134,7 +159,11 @@ class MapObject extends DataObject {
 			$layer->Version = '1.1.0';
 			$layer->StorageID = $storage->ID;
 			$layer->MapID = $map->ID;
+			$layer->LayerCategoryID = $category->ID;
 			$layer->write();	
+
+			$featureType->LayerID = $layer->ID;
+			$featureType->write();
 		
 			$style = new StyleMap();	
 			$style->Name = 'Point of Interests - Demo';
@@ -188,6 +217,7 @@ class MapObject extends DataObject {
 			$layer->Version = '1.1.0';
 			$layer->StorageID = $storage->ID;
 			$layer->MapID = $map->ID;
+			$layer->LayerCategoryID = $category->ID;
 			$layer->write();	
 			
 			$layers = $style->WFSLayers();
