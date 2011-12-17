@@ -83,7 +83,7 @@ class FeatureType extends DataObject {
 		$controller = Controller::curr();
 		$link = Controller::join_links($controller->Link());
 
-		$presenter = singleton(MapControllerExtension::get_map_presenter_class());		
+		$presenter = singleton(MapPageDecorator::get_map_presenter_class());		
 
 		Requirements::javascript($presenter->getModulePath().'javascript/FeatureType.js');	
 
