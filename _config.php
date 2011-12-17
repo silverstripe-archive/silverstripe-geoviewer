@@ -9,8 +9,7 @@ Proxy_Controller::set_allowed_host(array(
 	'localhost:8080','localhost'
 ));
 
-DataObject::add_extension('MapPage', 'MapPageDecorator');
-Object::add_extension('MapPage_Controller', 'MapControllerExtension');
+Object::add_extension('MapPage', 'MapPageDecorator');
 
 
 $file_extensions = File::$allowed_extensions;
