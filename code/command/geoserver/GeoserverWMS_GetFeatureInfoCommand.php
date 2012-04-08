@@ -95,7 +95,7 @@ class GeoserverWMS_GetFeatureInfoCommand extends ControllerCommand {
 		curl_close($ch);
 
 		if($statusCode != 200) {
-			throw new OLFeature_Controller_Exception("Bad response in executeOwsRequest (code: $statusCode): " . $response );
+			throw new Feature_Controller_Exception("Bad response in executeOwsRequest (code: $statusCode): " . $response );
 		}
 			
 		return $response;
