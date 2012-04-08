@@ -84,7 +84,6 @@ class FeatureType extends DataObject {
 		$link = Controller::join_links($controller->Link());
 
 		$presenter = singleton(MapPageDecorator::get_map_presenter_class());		
-
 		Requirements::javascript($presenter->getModulePath().'javascript/FeatureType.js');	
 
 		$tableField = $this->getLabelTableField();
@@ -97,6 +96,18 @@ class FeatureType extends DataObject {
 		
 		return $fields;
 	}
+	
+	function getLayerLegendURL() {
+		$geoserverUrl = $this->Layer()->Storage()->URL;
+		$geoserverUrl = str_replace('/gwc/service','',$geoserverUrl);
+		
+		$name = sprintf("%s:%s",$this->Namespace,$this->Name);
+		$url = sprintf("%s?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=50&HEIGHT=20&LAYER=%s&LEGEND_OPTIONS=dx:0.2;dy:0.2;mx:0.2;my:0.2;fontStyle:normal;fontSize:10",$geoserverUrl,$name);
+				
+		$value = json_encode($url);
+		return $value;
+	}	
+	
 
 	/**
 	 */
