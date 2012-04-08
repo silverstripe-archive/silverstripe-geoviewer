@@ -87,7 +87,7 @@ class MapObject extends DataObject {
 		parent::requireDefaultRecords();
 		
 		// check if demo-map-page has been created
-		$page = DataObject::get_one('MapPage',"Title = 'New York - Map Demo'");
+		$page = DataObject::get_one('MapPage',"\"Title\" = 'New York - Map Demo'");
 				
 		if ($page == false && self::get_create_demo_map()) {
 		
