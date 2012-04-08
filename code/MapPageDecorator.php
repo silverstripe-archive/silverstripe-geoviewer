@@ -58,13 +58,7 @@ class MapPageDecorator extends DataObjectDecorator {
 			die();
 		}
 
-		$js_files = array(
-			'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js',
-			$presenter->getModulePath().'/thirdparty/jquery-ui-1.7.2.custom.min.js',
-			$presenter->getModulePath().'/thirdparty/jquery.entwine/dist/jquery.entwine-dist.js',
-			$presenter->getModulePath().'/thirdparty/jquery.metadata/jquery.metadata.js',
-		);
-
+		$js_files = $presenter->getJavaScriptFiles();
 		foreach($js_files as $file) {
 			Requirements::javascript($file);
 		}
@@ -86,12 +80,15 @@ class MapPageDecorator extends DataObjectDecorator {
 
 		$cssFiles = $presenter->getCSSFiles();
 		if (!empty($cssFiles)) {
-			Requirements::combine_files('mapper.css', $cssFiles );
+			foreach($cssFiles as $file) {
+				Requirements::css($file);
+			}
+			// Requirements::combine_files('mapper.css', $cssFiles );
 		}
 		
 		// we need to add call to js maps somehow, any better way?
 		if ($this->owner->MapID) {
-			$googleCheck = DataObject::get_one('Layer_GoogleMap',"MapID = ".$this->owner->MapID." AND \"Enabled\" = 1");
+			$googleCheck = DataObject::get_one('Layer_GoogleMap',"\"MapID\" = ".$this->owner->MapID." AND \"Enabled\" = 1");
 			if($googleCheck){
 				$api_key = $presenter->GoogleMapAPIKey();
 				Requirements::javascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key={$api_key}&amp;sensor=true");
