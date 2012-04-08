@@ -7,6 +7,14 @@ class MapPagePresenter extends ViewableData {
 
 	private $modulePath = 'geoviewer';
 
+	function getModulePath() {
+		return $this->modulePath;
+	}
+
+	function setModulePath($value) {
+		$this->modulePath = $value;
+	}
+		
 	function getCSSFiles() {
 		$value = array(
 			$this->getModulePath().'/css/MapStyle.css', // CSS for MapStyles
@@ -17,8 +25,6 @@ class MapPagePresenter extends ViewableData {
 		return $value;
 	}
 
-	function getModulePath() {
-		return $this->modulePath;
 	function getJavaScriptFiles() {
 		$js_files = array(
 			'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js',
@@ -29,10 +35,6 @@ class MapPagePresenter extends ViewableData {
 		return $js_files;
 	}
 
-	function setModulePath($value) {
-		$this->modulePath = $value;
-	}
-		
 	function getJavaScript($model) {
 		$this->failover = $model;		
 		return $model->renderWith('JS_MapPage');
@@ -51,5 +53,4 @@ class MapPagePresenter extends ViewableData {
 		}
 		return $api_key;
 	}	
-
 }
