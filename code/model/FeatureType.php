@@ -108,6 +108,15 @@ class FeatureType extends DataObject {
 		return $value;
 	}	
 	
+	protected function onBeforeDelete() { 
+		parent::onBeforeDelete();
+		
+		$labels = $this->Labels();
+		foreach($labels as $label) {
+			$label->delete();
+		}
+	}
+
 
 	/**
 	 */
