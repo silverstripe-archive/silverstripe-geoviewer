@@ -1,7 +1,9 @@
 <?php
 /**
- * @package mapping
- * @subpackage geoserver
+ * @package geoviewer
+ * @subpackage model
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ *
  */
 
 /**

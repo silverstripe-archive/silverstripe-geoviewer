@@ -1,5 +1,12 @@
 <?php 
+/**
+ * @package geoviewer
+ * @subpackage code
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ *
+ */
 
+ 
 class MapPageDecorator extends DataObjectDecorator {
 
 	static $map_presenter_class = 'MapPagePresenter';

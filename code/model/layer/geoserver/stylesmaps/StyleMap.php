@@ -1,4 +1,10 @@
 <?php
+/**
+ * @package geoviewer
+ * @subpackage model
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ *
+ */
 
 
 class StyleMap extends DataObject {

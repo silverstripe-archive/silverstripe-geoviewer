@@ -1,9 +1,11 @@
 <?php
 /**
- * @author Rainer Spittel (rainer at silverstripe dot com)
- * @package openlayers
+ * @package geoviewer
  * @subpackage code
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ *
  */
+
 
 /**
  * Proxy controller delegates HTTP requests to dedicated web servers.

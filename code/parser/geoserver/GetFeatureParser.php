@@ -1,8 +1,11 @@
 <?php
 /**
- * @package mapping
+ * @package geoviewer
  * @subpackage parser
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ *
  */
+
 
 /**
  * Parses feature request.
