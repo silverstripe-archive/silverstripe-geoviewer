@@ -38,7 +38,8 @@ class GeoserverWMS_GetFeatureInfoCommand extends ControllerCommand {
 		$allowedParams = $requiredParams;
 		$params = ArrayLib::filter_keys($params, $allowedParams);
 	
-		$params['info_format'] = 'text/plain';
+		// $params['info_format'] = 'text/plain';
+		$params['info_format'] = 'application/vnd.ogc.gml';
 		$params['REQUEST'] = 'GetFeatureInfo';
 		$params['SERVICE'] = 'WMS';
 		$params['VERSION'] = '1.1.0';
@@ -53,7 +54,7 @@ class GeoserverWMS_GetFeatureInfoCommand extends ControllerCommand {
 			$url,
 			$params
 		);
-		$request->addHeader('Content-Type', 'text/plain');
+		$request->addHeader('Content-Type', 'application/vnd.ogc.gml');
 		return $request;
 	}
 	
@@ -108,8 +109,9 @@ class GeoserverWMS_GetFeatureInfoCommand extends ControllerCommand {
 		$url = $parameters['URL'];
 		
 		$ogc_request = $this->getWmsGetFeatureInfoRequest($url, $params);
+
 		$response = $this->executeOwsRequest($ogc_request);
-		
+
 		return $response;
 	}
 	

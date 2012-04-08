@@ -168,16 +168,19 @@ class Feature_Controller extends Controller {
 		$layers = DataObject::get("Layer",sprintf("\"Layer\".\"ID\" in (%s) AND \"Queryable\" = 1",Convert::raw2sql($layerID)));
 		
 		$commands = $this->getActions($layers, $action);
+
 		$results = array();
 		foreach($commands as $id => $item) {
 			$commandName = $item['Action'];
 			// initiate command parameters for the WMS-GetFeatureInfo request
 			$url = $item['URL'];
+			
 			$layers = $item['Layers']->map("ID","LayerName");
 			$layers = implode(',',$layers);
-			
-			$param['LAYERS'] = $layers;
+			$namespaces = $item['Layers']->map("Namespace","Namespace");
 
+			$param['LAYERS'] = $layers;
+			
 			$data = array(
 				'URL' => $url,
 				'HTTP_parameters' => $param
@@ -185,17 +188,24 @@ class Feature_Controller extends Controller {
 			try {
 				// get command and execute command
 				$cmd = $this->getCommand($commandName, $data);
-				$results[] = $cmd->execute();
-
+				$xml = $cmd->execute();
+						
+				$item = array(
+					'Namespace' => $namespaces,
+					'ServerResult' => $xml
+				);
+				$results[] = $item;
 			}
 			catch(Exception $exception) {
 			}
 		}
-
-		$parser = new GetFeatureTextPlainParser();
+		
+		$parser = new GetFeatureXMLParser();
 		$parser->setLimit(25);
-
+		$items = new DataObjectSet();
+		
 		$response_features = array();
+
 		try {
 			foreach($results as $result) {
 				$response_features[] = $parser->parse($result);

@@ -29,4 +29,10 @@ class Layer_GeoserverWMS extends Layer {
 	static function getFeatureInfoParserName() {
 		return "GetFeatureTextPlainParser";
 	}
+	
+	function getNamespace() {
+		$pairs = preg_split("/:/", $this->LayerName, -1, PREG_SPLIT_NO_EMPTY);
+		$namespace = $pairs[0];
+		return $namespace;
+	}
 }
