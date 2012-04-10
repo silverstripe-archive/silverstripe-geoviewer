@@ -32,7 +32,8 @@ class FeatureType extends DataObject {
 	
 	static $summary_fields = array(
 		'Name',
-		'Layer.Title'
+		'Layer.Title',
+		'Layer.Map.Title'		
 	);
 
 	static $default_sort = "\"Name\" ASC";
@@ -111,6 +112,18 @@ class FeatureType extends DataObject {
 		return $value;
 	}	
 	
+	/**
+	 */
+	public function getCMSActions() {
+		
+		$actions = parent::getCMSActions();
+		$actions->push(new FormAction("doImportLabels", "Import Labels"));		
+		return $actions;
+	}
+
+	/**
+	 * todo: check
+	 */
 	protected function onBeforeDelete() { 
 		parent::onBeforeDelete();
 		
@@ -120,14 +133,5 @@ class FeatureType extends DataObject {
 		}
 	}
 
-
-	/**
-	 */
-	public function getCMSActions() {
-		
-		$actions = parent::getCMSActions();
-		$actions->push(new FormAction("doImportLabels", "Import Labels"));		
-		return $actions;
-	}
 
 }
