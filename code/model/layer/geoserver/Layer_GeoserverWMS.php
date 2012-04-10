@@ -34,7 +34,7 @@ class Layer_GeoserverWMS extends Layer {
 	static $searchable_fields = array(
 	      'Title',
 	      'LayerName'
-	   );
+	);
 	
 	static $default_sort = "Title ASC, LayerName ASC";
 	
