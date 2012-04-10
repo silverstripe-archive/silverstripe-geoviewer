@@ -1,9 +1,9 @@
 (function($) { 
 	$.entwine('ol', function($) {	
-		
 		$('.olMap').entwine({ 
 
 			ControllerName: 'Feature', 
+
 			<% control Map %>
  			MapID: '$ID', 
 
@@ -30,7 +30,19 @@
 
 				OpenLayers.ProxyHost="Proxy/dorequest?u=";
 				<% end_control %>
+
+			getMinZoomLevel: function() {
+				<% control Map %>
+				return $MinZoomLevel;
+				<% end_control %>
+			},
+
+			getMaxZoomLevel: function() {
+				<% control Map %>
+				return $MaxZoomLevel;
+				<% end_control %>
 			}
+
 		});
 	});
 
