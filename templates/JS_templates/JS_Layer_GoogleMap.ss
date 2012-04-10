@@ -1,9 +1,8 @@
+//
+// Initialise Google Maps - $GMapType
+//
 var layer = null;
 var options = [];
-
-// current assumption: if google maps layers are used, 
-// we always use sphericalMercator.
-
 layer = new OpenLayers.Layer.Google(
 	"$ID",
 	$.extend({
