@@ -23,6 +23,17 @@ class Layer_GeoserverWMS extends Layer {
 	static $has_one = array(
 		'Storage' => "StorageGeoserver"
 	);
+
+	static $summary_fields = array(
+		'Title',
+		'LayerName',
+		'Map.Title'
+	);
+	
+	static $searchable_fields = array(
+	      'Title',
+	      'LayerName'
+	   );
 	
 	static $default_sort = "Title ASC, LayerName ASC";
 	

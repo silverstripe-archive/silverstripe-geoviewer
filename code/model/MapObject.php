@@ -34,6 +34,15 @@ class MapObject extends DataObject {
 		'Layers' => 'Layer'
 	);
 
+	static $searchable_fields = array(
+	      'Title'  
+	);
+
+	static $summary_fields = array(
+		'Title',
+		'MapPage.Title'
+	);
+
 	static $default_sort = "Title ASC";
 
 	static function set_create_demo_map($value) {
