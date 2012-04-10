@@ -31,6 +31,10 @@ class MapObject extends DataObject {
 		"MaxZoomLevel" => "Int"
 	);
 
+	static $has_one = array(
+		"MapPage" => "Page"
+	);	
+
 	static $has_many = array(
 		'Layers' => 'Layer'
 	);
