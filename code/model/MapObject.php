@@ -79,10 +79,6 @@ class MapObject extends DataObject {
 		return $js;
 	}
 	
-	function GetResolutionsAsJSON() {
-		return json_encode(explode(",", $this->getField('Resolutions')));
-	}
-	
 	function getCategories() {
 		
 		$categories = DataObject::get(
