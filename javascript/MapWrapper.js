@@ -30,8 +30,11 @@
 
 				OpenLayers.ProxyHost="Proxy/dorequest?u=";
 				var mapOptions = { 
-					
 					resolutions: this.getResolutions(),
+
+					minZoomLevel: this.getMinZoomLevel(), 
+
+					maxZoomLevel: this.getMaxZoomLevel(),
 
 					displayProjection: this.getDisplayProjection(),
 

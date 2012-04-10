@@ -24,10 +24,11 @@ class MapObject extends DataObject {
 		"Lat" => "Float",
 		"Long" => "Float",
 		"ZoomLevel" => "Int",
-		
 		'Resolutions' => 'Varchar(1024)',
 		'DisplayProjection' => "Enum(array('EPSG:4326','EPSG:900913'),'EPSG:4326')",
 		'Projection' => "Enum(array('EPSG:4326','EPSG:900913'),'EPSG:4326')",
+		"MinZoomLevel" => "Int",
+		"MaxZoomLevel" => "Int"
 	);
 
 	static $has_many = array(
