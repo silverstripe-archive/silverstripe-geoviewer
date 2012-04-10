@@ -33,14 +33,17 @@ class GetFeatureXMLParser extends GetFeatureParser implements IGetFeatureParser 
 	protected function parseFeature($feature) {
 		$result = array('properties' => array());
 		$namespace_items = $this->namespace_items;
-				
+		$featureTypeName = '';
+		
 		foreach($namespace_items as $namespace) {
 			$featureTypeClass = $feature->children($namespace);		
 					
-			$featureTypeName = $featureTypeClass->getName();
+			$name = $featureTypeClass->getName();
 
-			if ($featureTypeName == '') continue;	
+			if ($name == '') continue;	
 					
+			$featureTypeName = $name;
+			
 			if (!$this->canParse($featureTypeName)) continue;
 
 			foreach($featureTypeClass as $items) {
@@ -124,8 +127,8 @@ class GetFeatureXMLParser extends GetFeatureParser implements IGetFeatureParser 
 		$gml = $xml->children($namespace_gml);
 
 		foreach($gml->featureMember as $xml_feature ) {
+			
 			$feature = $this->parseFeature($xml_feature);
-				
 			$this->addFeatureToList($features, $feature);
 		}
 		return $features;
