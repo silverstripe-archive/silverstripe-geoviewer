@@ -27,6 +27,8 @@ class Layer_GoogleMap extends Layer {
 		'GMapTypeName' =>  "Enum(array('Satellite','Map','Terrain','Hybrid'),'Satellite')",
 	);
 
+	static $default_sort = "Title ASC, GMapTypeName ASC";
+	
 	public function getCMSFields($params = null) {
 		$fields = parent::getCMSFields($params);
 		
@@ -36,7 +38,6 @@ class Layer_GoogleMap extends Layer {
 		return $fields;
 	}	
 
-
 	protected function onBeforeWrite() {
 		parent::onBeforeWrite();
 		
@@ -44,7 +45,6 @@ class Layer_GoogleMap extends Layer {
 		return;
 	}
 		
-	
 	function getGMapType() {
 		return self::$gmap_types[$this->GMapTypeName];
 	}
@@ -54,7 +54,6 @@ class Layer_GoogleMap extends Layer {
 	}
 	
 	function isSphericalMercator() {
-		
 		$retValue = false;
 		
 		if ($this->Map()) {

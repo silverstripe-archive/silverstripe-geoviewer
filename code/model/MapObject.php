@@ -34,6 +34,8 @@ class MapObject extends DataObject {
 		'Layers' => 'Layer'
 	);
 
+	static $default_sort = "Title ASC";
+
 	static function set_create_demo_map($value) {
 		self::$create_demo_map = $value;
 	}

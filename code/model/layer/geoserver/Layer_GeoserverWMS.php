@@ -24,6 +24,8 @@ class Layer_GeoserverWMS extends Layer {
 		'Storage' => "StorageGeoserver"
 	);
 	
+	static $default_sort = "Title ASC, LayerName ASC";
+	
 	function getJavaScript() {
 		return $this->renderWith('JS_Layer_GeoserverWMS');
 	}

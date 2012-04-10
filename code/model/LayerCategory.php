@@ -29,6 +29,8 @@ class LayerCategory extends DataObject {
 		'TitleNice' => 'Text'
 	);
 	
+	static $default_sort = "Title ASC";
+	
 	static $singular_name = 'Category';
 	
 	static $plural_name = 'Categories';
