@@ -7,8 +7,6 @@
 			<% control Map %>
  			MapID: '$ID', 
 
-			Resolutions : $GetResolutionsAsJSON,
-			
 			DisplayProjection : new OpenLayers.Projection('$DisplayProjection'),
 			
 			Projection : new OpenLayers.Projection('$Projection'),
@@ -30,6 +28,13 @@
 
 				OpenLayers.ProxyHost="Proxy/dorequest?u=";
 				<% end_control %>
+			},
+
+			getResolutions: function() {
+				<% control Map %>
+				return [ $Resolutions ];
+				<% end_control %>
+			},
 
 			getMinZoomLevel: function() {
 				<% control Map %>
