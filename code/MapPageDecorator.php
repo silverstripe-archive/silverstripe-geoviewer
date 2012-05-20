@@ -11,12 +11,22 @@ class MapPageDecorator extends DataObjectDecorator {
 
 	static $map_presenter_class = 'MapPagePresenter';
 	
+	static $openlayers_path = '/thirdparty/openlayers_dev/OpenLayers.js';
+	
 	static function get_map_presenter_class() {
 		return self::$map_presenter_class;
 	}
 	
 	static function set_map_presenter_class($value) {
 		self::$map_presenter_class = $value;
+	}
+
+	static function get_openlayers_path() {
+		return self::$openlayers_path;
+	}
+	
+	static function set_openlayers_path($value) {
+		self::$openlayers_path = $value;
 	}
 		
 	
@@ -70,7 +80,7 @@ class MapPageDecorator extends DataObjectDecorator {
 			Requirements::javascript($file);
 		}
 
-		Requirements::javascript($presenter->getModulePath()."/thirdparty/openlayers_dev/OpenLayers.js");
+		Requirements::javascript($presenter->getModulePath().$this->get_openlayers_path());
 
 		$js_files = array(
 			$presenter->getModulePath()."/javascript/MapWrapper.js",
