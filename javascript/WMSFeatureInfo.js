@@ -22,7 +22,7 @@ var infoControl = null;
 				var index   = 0;
 				for (var i in layers) {
 					layer = layers[i];
-					if (layer.queryable == true) list[index++] = layer.url; 
+					if (layer.queryable == true) list[index++] = layer.url[0]; 
 				};
 				return list;				
 			},
