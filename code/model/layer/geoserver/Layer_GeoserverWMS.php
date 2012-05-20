@@ -19,6 +19,7 @@ class Layer_GeoserverWMS extends Layer {
 		'LayerName' => 'Varchar(512)',
 		'Format' => "Enum(array('image/png','image/jpeg','image/png24','image/gif'),'image/png')",
 		'transitionEffect' => "Enum(array('','resize'),'resize')",
+		'info_format' => "Enum(array('text/plain','application/vnd.ogc.gml'),'application/vnd.ogc.gml')"
 	);
 	
 	static $has_one = array(
