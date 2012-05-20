@@ -1,6 +1,15 @@
 var options = {layers: '$LayerName' , format: '$Format', transparent: $isTransparent };
 
-var layer = new OpenLayers.Layer.WMS( '$ID', '$Storage.URL', options,  {alpha: true, tileSize: new OpenLayers.Size(256,256)} );
+<% if Storage.UseMultiCache %>
+var urlArray = ["$Storage.Cache_URL_01",
+                "$Storage.Cache_URL_02",
+                "$Storage.Cache_URL_03",
+                "$Storage.Cache_URL_04"];
+<% else %>
+var urlArray = ["$Storage.URL"];
+<% end_if %>
+
+var layer = new OpenLayers.Layer.WMS( '$ID', urlArray, options,  {alpha: true, tileSize: new OpenLayers.Size(256,256)} );
 layer.queryable = $isQueryable;
 layer.setVisibility($isVisible);	
 
