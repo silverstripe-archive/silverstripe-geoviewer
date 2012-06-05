@@ -33,8 +33,8 @@ class MapPagePresenter extends ViewableData {
 
 	function getJavaScriptFiles() {
 		$js_files = array(
-			'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js',
-			$this->getModulePath().'/thirdparty/jquery-ui-1.7.2.custom.min.js',
+			'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+			// $this->getModulePath().'/thirdparty/jquery-ui-1.7.2.custom.min.js',
 			$this->getModulePath().'/thirdparty/jquery.entwine/dist/jquery.entwine-dist.js',
 			$this->getModulePath().'/thirdparty/jquery.metadata/jquery.metadata.js',
 		);
