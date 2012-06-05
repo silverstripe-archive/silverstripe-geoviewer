@@ -6,7 +6,7 @@ FILE="dist/jquery.entwine-dist.js"
 mkdir -p dist
 rm dist/*.js
 
-echo "/* jQuery.Entwine - Copyright 2009 Hamish Friedlander and SilverStripe. Version $VER. */" > $FILE
+echo "/* jQuery.Entwine - Copyright 2009-2011 Hamish Friedlander and SilverStripe. Version $VER. */" > $FILE
 
 for x in \
 	vendor/jquery.selector/jquery.class.js \
@@ -28,6 +28,8 @@ do \
   echo ';' >> $FILE
   echo >> $FILE
 done
+
+cp $FILE "dist/jquery.concrete-dist.js"
 
 # cp LICENSE /tmp/
 # cp $FILE /tmp/

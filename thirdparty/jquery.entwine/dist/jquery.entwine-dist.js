@@ -1,4 +1,4 @@
-/* jQuery.Entwine - Copyright 2009 Hamish Friedlander and SilverStripe. Version . */
+/* jQuery.Entwine - Copyright 2009-2011 Hamish Friedlander and SilverStripe. Version . */
 
 /* vendor/jquery.selector/jquery.class.js */
 
@@ -367,6 +367,8 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 	}
 	catch(e) { funcToString = false; console.log(e.message);/*pass*/ }
 
+	funcToString = null;
+	
 	/**** INTRO ****/
 	
 	var GOOD = /GOOD/g;
@@ -749,7 +751,12 @@ Sizzle is good for finding elements for a selector, but not so good for telling 
 
 /* src/jquery.entwine.js */
 
-var console;
+try {
+	console.log;
+}
+catch (e) {
+	window.console = undefined;
+}
 
 (function($) {	
 	
@@ -774,7 +781,7 @@ var console;
 		 */
 		clear_all_rules: function() { 
 			// Remove proxy functions
-			for (var k in $.fn) { if ($.fn[k].entwine) delete $.fn[k] ; }
+			for (var k in $.fn) { if ($.fn[k].isentwinemethod) delete $.fn[k]; }
 			// Remove bound events - TODO: Make this pluggable, so this code can be moved to jquery.entwine.events.js
 			$(document).unbind('.entwine');
 			// Remove namespaces, and start over again
@@ -870,38 +877,48 @@ var console;
 			}
 			else {
 				// We're in a namespace, so we build a Class that subclasses the jQuery Object Class to inject namespace functions into
-				var subfn = function(){};
-				this.injectee = subfn.prototype = new $();
 				
-				// And then we provide an overriding $ that returns objects of our new Class, and an overriding pushStack to catch further selection building
-				var bound$ = this.$ = function(a) {
-					// Try the simple way first
-					var jq = $.fn.init.apply(new subfn(), arguments);
-					if (jq instanceof subfn) return jq;
+				// jQuery 1.5 already provides a nice way to subclass, so use it
+				if ($.sub) {
+					this.$ = $.sub();
+					this.injectee = this.$.prototype;
+				}
+				// For jQuery < 1.5 we have to do it ourselves
+				else {
+					var subfn = function(){};
+					this.injectee = subfn.prototype = new $;
+				
+					// And then we provide an overriding $ that returns objects of our new Class, and an overriding pushStack to catch further selection building
+					var bound$ = this.$ = function(a) {
+						// Try the simple way first
+						var jq = $.fn.init.apply(new subfn(), arguments);
+						if (jq instanceof subfn) return jq;
 					
-					// That didn't return a bound object, so now we need to copy it
-					var rv = new subfn();
-					rv.selector = jq.selector; rv.context = jq.context; var i = rv.length = jq.length;
-					while (i--) rv[i] = jq[i];
-					return rv;
-				};
-				this.injectee.pushStack = function(elems, name, selector){
-					var ret = bound$(elems);
+						// That didn't return a bound object, so now we need to copy it
+						var rv = new subfn();
+						rv.selector = jq.selector; rv.context = jq.context; var i = rv.length = jq.length;
+						while (i--) rv[i] = jq[i];
+						return rv;
+					};
+				
+					this.injectee.pushStack = function(elems, name, selector){
+						var ret = bound$(elems);
 
-					// Add the old object onto the stack (as a reference)
-					ret.prevObject = this;
-					ret.context = this.context;
+						// Add the old object onto the stack (as a reference)
+						ret.prevObject = this;
+						ret.context = this.context;
 					
-					if ( name === "find" ) ret.selector = this.selector + (this.selector ? " " : "") + selector;
-					else if ( name )       ret.selector = this.selector + "." + name + "(" + selector + ")";
+						if ( name === "find" ) ret.selector = this.selector + (this.selector ? " " : "") + selector;
+						else if ( name )       ret.selector = this.selector + "." + name + "(" + selector + ")";
 					
-					// Return the newly-formed element set
-					return ret;
-				};
+						// Return the newly-formed element set
+						return ret;
+					};
 				
-				// Copy static functions through from $ to this.$ so e.g. $.ajax still works
-				// @bug, @cantfix: Any class functions added to $ after this call won't get mirrored through 
-				$.extend(this.$, $);
+					// Copy static functions through from $ to this.$ so e.g. $.ajax still works
+					// @bug, @cantfix: Any class functions added to $ after this call won't get mirrored through 
+					$.extend(this.$, $);
+				}
 				
 				// We override entwine to inject the name of this namespace when defining blocks inside this namespace
 				var entwine_wrapper = this.injectee.entwine = function(spacename) {
@@ -989,12 +1006,12 @@ var console;
 			
 			var rule = rulelist.addRule(selector, name); rule.func = func;
 			
-			if (!this.injectee.hasOwnProperty(name) || !this.injectee[name].entwine) {
+			if (!this.injectee.hasOwnProperty(name) || !this.injectee[name].isentwinemethod) {
 				this.injectee[name] = this.build_proxy(name, this.injectee.hasOwnProperty(name) ? this.injectee[name] : null);
-				this.injectee[name].entwine = true;
+				this.injectee[name].isentwinemethod = true;
 			}
 
-			if (!this.injectee[name].entwine) {
+			if (!this.injectee[name].isentwinemethod) {
 				$.entwine.warn('Warning: Entwine function '+name+' clashes with regular jQuery function - entwine function will not be callable directly on jQuery object', $.entwine.WARN_LEVEL_IMPORTANT);
 			}
 		},
@@ -1176,10 +1193,24 @@ var console;
 
 (function($) {	
 
-	/* If we are any browser other than IE or Safari, we don't have to do anything special to handle
-	 * onchange delegation */ 
-	$.support.bubblingChange = !($.browser.msie || $.browser.safari);
-	
+	/** Taken from jQuery 1.5.2 for backwards compatibility */
+	if ($.support.changeBubbles == undefined) {
+		$.support.changeBubbles = true;
+
+		var el = document.createElement("div");
+		eventName = "onchange";
+
+		if (el.attachEvent) {
+			var isSupported = (eventName in el);
+			if (!isSupported) {
+				el.setAttribute(eventName, "return;");
+				isSupported = typeof el[eventName] === "function";
+			}
+
+			$.support.changeBubbles = isSupported;
+		}
+	}
+
 	/* Return true if node b is the same as, or is a descendant of, node a */
 	if (document.compareDocumentPosition) {
 		var is_or_contains = function(a, b) {
@@ -1240,46 +1271,104 @@ var console;
 		
 		build_change_proxy: function(name) {
 			var one = this.one(name, 'func');
-			
-			var prxy = function(e) {
-				var el = e.target;
-				// If this is a keydown event, only worry about the enter key, since browsers only trigger onchange on enter or focus loss
-				if (e.type === 'keydown' && e.keyCode !== 13) return;
-				// Make sure this is event is for an input type we're interested in
-				if (el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA' && el.tagName !== 'SELECT') return;
-					
-				var $el = $(el), nowVal, oldVal = $el.data('changeVal');
-			
-				// Detect changes on checkboxes & radiobuttons, which have different value logic. We don't use el.value, since el is part
-				// of a set, and we only want to raise onchange once for a single user action.
-				if (el.type == 'checkbox' || el.type == 'radio') {
-					if (!el.disabled && e.type === 'click') {
-						nowVal = el.checked;
-						// If radio, we get two changes - the activation, and the deactivation. We only want to fire one change though
-						if ((el.type === 'checkbox' || nowVal === true) && oldVal !== nowVal) e.type = 'change';
+
+			/*
+			This change bubble emulation code is taken mostly from jQuery 1.6 - unfortunately we can't easily reuse any of
+			it without duplication, so we'll have to re-migrate any bugfixes
+			*/
+
+			// Get the value of an item. Isn't supposed to be interpretable, just stable for some value, and different
+			// once the value changes
+			var getVal = function( elem ) {
+				var type = elem.type, val = elem.value;
+
+				if (type === "radio" || type === "checkbox") {
+					val = elem.checked;
+				}
+				else if (type === "select-multiple") {
+					val = "";
+					if (elem.selectedIndex > -1) {
+						val = jQuery.map(elem.options, function(elem){ return elem.selected; }).join("-");
 					}
 				}
-				// Detect changes on other input types. In this case value is OK.
-				else {
-					nowVal = el.value;
-					if (oldVal !== undefined && oldVal !== nowVal) e.type = 'change';
+				else if (jQuery.nodeName(elem, "select")) {
+					val = elem.selectedIndex;
 				}
-			
-				// Save the current value for next time
-				if (nowVal !== undefined) $el.data('changeVal', nowVal);
-			
-				// And if we decided that a change happened, do the actual triggering
-				if (e.type == 'change') {
-					while (el && el.nodeType == 1 && !e.isPropagationStopped()) {
-						var ret = one(el, arguments);
+
+				return val;
+			};
+
+			// Test if a node name is a form input
+			var rformElems = /^(?:textarea|input|select)$/i;
+
+			// Check if this event is a change, and bubble the change event if it is
+			var testChange = function(e) {
+				var elem = e.target, data, val;
+
+				if (!rformElems.test(elem.nodeName) || elem.readOnly) return;
+
+				data = jQuery.data(elem, "_entwine_change_data");
+				val = getVal(elem);
+
+				// the current data will be also retrieved by beforeactivate
+				if (e.type !== "focusout" || elem.type !== "radio") {
+					jQuery.data(elem, "_entwine_change_data", val);
+				}
+
+				if (data === undefined || val === data) return;
+
+				if (data != null || val) {
+					e.type = "change";
+
+					while (elem && elem.nodeType == 1 && !e.isPropagationStopped()) {
+						var ret = one(elem, arguments);
 						if (ret !== undefined) e.result = ret;
 						if (ret === false) { e.preventDefault(); e.stopPropagation(); }
-						
-						el = el.parentNode;
+
+						elem = elem.parentNode;
 					}
 				}
 			};
-			
+
+			// The actual proxy - responds to several events, some of which triger a change check, some
+			// of which just store the value for future change checks
+			var prxy = function(e) {
+				var event = e.type, elem = e.target, type = jQuery.nodeName( elem, "input" ) ? elem.type : "";
+
+				switch (event) {
+					case 'focusout':
+					case 'beforedeactivate':
+						testChange.apply(this, arguments);
+						break;
+
+					case 'click':
+						if ( type === "radio" || type === "checkbox" || jQuery.nodeName( elem, "select" ) ) {
+							testChange.apply(this, arguments);
+						}
+						break;
+
+					// Change has to be called before submit
+					// Keydown will be called before keypress, which is used in submit-event delegation
+					case 'keydown':
+						if (
+							(e.keyCode === 13 && !jQuery.nodeName( elem, "textarea" ) ) ||
+							(e.keyCode === 32 && (type === "checkbox" || type === "radio")) ||
+							type === "select-multiple"
+						) {
+							testChange.apply(this, arguments);
+						}
+						break;
+
+					// Beforeactivate happens also before the previous element is blurred
+					// with this event you can't trigger a change event, but you can store
+					// information
+					case 'focusin':
+					case 'beforeactivate':
+						jQuery.data( elem, "_entwine_change_data", getVal(elem) );
+						break;
+				}
+			}
+
 			return prxy;
 		},
 		
@@ -1300,9 +1389,9 @@ var console;
 						event = 'mouseout';
 						break;
 					case 'onchange':
-						if (!$.support.bubblingChange) {
+						if (!$.support.changeBubbles) {
 							proxies[name] = this.build_change_proxy(name);
-							event = 'click focusin focusout keydown';
+							event = 'click keydown focusin focusout beforeactivate beforedeactivate';
 						}
 						break;
 					case 'onsubmit':
@@ -1315,8 +1404,8 @@ var console;
 				
 				// If none of the special handlers created a proxy, use the generic proxy
 				if (!proxies[name]) proxies[name] = this.build_event_proxy(name);
-				
-				$(document).bind(event+'.entwine', proxies[name]);
+
+				$(document).bind(event.replace(/(\s+|$)/g, '.entwine$1'), proxies[name]);
 			}
 		}
 	});
@@ -1449,12 +1538,20 @@ var console;
 							// Find the ones that are gone this time
 							rem = rule.cache.not(res);
 							// And call the destructor on them
-							if (rem.length) ctors.onunmatchproxy(rem, j, dtor);
+							if (rem.length && !rule.onunmatchRunning) {
+								rule.onunmatchRunning = true;
+								ctors.onunmatchproxy(rem, j, dtor);
+								rule.onunmatchRunning = false;
+							}
 						}
 					}
 					
 					// Call the constructor on the newly matched ones
-					if (add.length && ctor) ctors.onmatchproxy(add, j, ctor);
+					if (add.length && ctor && !rule.onmatchRunning) {
+						rule.onmatchRunning = true;
+						ctors.onmatchproxy(add, j, ctor);
+						rule.onmatchRunning = false;
+					}
 					
 					// Add these matched ones to the list tracking all elements matched so far
 					matched = matched.add(res);
@@ -1532,7 +1629,7 @@ var console;
 			var getterName = 'get'+k;
 			var setterName = 'set'+k;
 
-			this.bind_proxy(selector, getterName, function() { return this.entwineData(k) || v ; });
+			this.bind_proxy(selector, getterName, function() { var r = this.entwineData(k); return r === undefined ? v : r; });
 			this.bind_proxy(selector, setterName, function(v){ return this.entwineData(k, v); });
 			
 			// Get the get and set proxies we just created
