@@ -17,6 +17,9 @@ $file_extensions[] = 'kml';
 $file_extensions[] = 'kmz';
 File::$allowed_extensions = $file_extensions;
 
+
+MapPageDecorator::set_openlayers_path('/thirdparty/openlayers_dev_2.12/lib/OpenLayers.js');
+
 /** 
  * Add to .htaccess file in assets following lines:
 
