@@ -19,9 +19,6 @@ class Layer_WFS extends Layer {
 		throw new Layer_WFS_Exception('getJavaScript not implemented');
 	}
 	
-	static function getFeatureInfoParserName() {
-		throw new Layer_WFS_Exception('getFeatureInfoParserName not implemented');
-	}	
 }
 
 class Layer_WFS_Exception extends Exception {

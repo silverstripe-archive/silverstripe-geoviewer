@@ -27,10 +27,6 @@ class Layer_GML extends Layer {
 		return $this->renderWith('JS_Layer_GML');
 	}
 	
-	static function getFeatureInfoParserName() {
-		return "GetFeatureTextPlainParser";
-	}
-
 	public function getCMSFields($params = null) {
 		$fields = parent::getCMSFields($params);
 				

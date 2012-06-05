@@ -117,7 +117,6 @@ class GetFeatureXMLParser extends GetFeatureParser implements IGetFeatureParser 
 		
 		$items = array();
 		foreach($used_namespace as $namespace) {
-			
 			if (isset($namespaces[$namespace])) {
 				$items[] = $namespaces[$namespace];
 			}

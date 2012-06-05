@@ -28,10 +28,6 @@ class Layer_KML extends Layer {
 		return $this->renderWith('JS_Layer_KML');
 	}
 	
-	static function getFeatureInfoParserName() {
-		return "GetFeatureTextPlainParser";
-	}
-
 	public function getCMSFields($params = null) {
 		$fields = parent::getCMSFields($params);
 				

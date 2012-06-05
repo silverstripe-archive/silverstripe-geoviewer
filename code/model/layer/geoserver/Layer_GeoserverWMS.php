@@ -43,13 +43,16 @@ class Layer_GeoserverWMS extends Layer {
 		return $this->renderWith('JS_Layer_GeoserverWMS');
 	}
 	
-	static function getFeatureInfoParserName() {
-		return "GetFeatureTextPlainParser";
-	}
-	
 	function getNamespace() {
-		$pairs = preg_split("/:/", $this->LayerName, -1, PREG_SPLIT_NO_EMPTY);
-		$namespace = $pairs[0];
+		$namespace = '';
+		foreach($this->FeatureTypes() as $featuretype) {
+			$namespace = $featuretype->Namespace;
+		}
+
+		if ($namespace == '') {
+			$pairs = preg_split("/:/", $this->LayerName, -1, PREG_SPLIT_NO_EMPTY);
+			$namespace = $pairs[0];
+		}
 		return $namespace;
 	}
 }

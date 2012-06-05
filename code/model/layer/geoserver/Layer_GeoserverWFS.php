@@ -28,8 +28,4 @@ class Layer_GeoserverWFS extends Layer_WFS {
 		return $this->renderWith('JS_Layer_GeoserverWFS');
 	}
 	
-	static function getFeatureInfoParserName() {
-		return "GetFeatureTextPlainParser";
-	}
-
 }
