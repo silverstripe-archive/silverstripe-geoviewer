@@ -9,8 +9,15 @@
 			MinZoomLevel: 3, 
 			
 			createControls: function(map) {
-				map.addControl(new OpenLayers.Control.Navigation());
-				map.addControl(new OpenLayers.Control.PanZoomBar());
+				map.addControl(new OpenLayers.Control.Navigation({
+                dragPanOptions: {
+                    enableKinetic: {
+                        deceleration: 0.02
+                    }
+                }
+            	}));
+				map.addControl(new OpenLayers.Control.Zoom({alwaysZoom:true}));
+				// map.addControl(new OpenLayers.Control.PanZoomBar());
 				map.addControl(new OpenLayers.Control.KeyboardDefaults());
 				map.addControl(new OpenLayers.Control.MousePosition());
 			},
