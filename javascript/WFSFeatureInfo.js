@@ -17,6 +17,7 @@
 				//
 				// enable all vector layers to be selectable via one controller.
 				var layers = map.getBy('layers','isVector',true);
+				
 				this.activateLayers(layers);
 			},
 
@@ -82,10 +83,14 @@
 				var mapID = this.getMapID();
 				var url = this.getControllerName() + '/dogetfeature/'+mapID+'/'+featureIDList;
 
-				// get attributes for selected feature(s)
-				var loadCallback = function(response) { self.loadPopup(response); };
+				$.ajax({
+					url: url,
+					context: this,
+					success: function(data) { 
+						self.loadPopup(data);
+					}
+				});
 
-				OpenLayers.loadURL(url, null, this, loadCallback);
 				return false;
 			},
 

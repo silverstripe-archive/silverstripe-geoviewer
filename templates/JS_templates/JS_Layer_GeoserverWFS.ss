@@ -35,5 +35,8 @@ this.getOLMap().addLayer(layer);
 
 layer.setVisibility($isVisible);
 
+// add custom flag for vector layers. Used to determine the WFS getFeature handler.
+layer.isVector = true;
+
 layer.events.register("loadstart", this.getOLMap(), function(evt) { self.loadStart(evt); } );
 layer.events.register("loadend", this.getOLMap(), function(evt) { self.loadEnd(evt); } );

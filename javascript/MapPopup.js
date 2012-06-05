@@ -104,8 +104,7 @@
 
 				if (popup != null) {
 					if (response) {
-						innerHTML = response.responseText;
-						popup.setContentHTML( innerHTML );
+						popup.setContentHTML( response );
 					}
 				}
 			}			
