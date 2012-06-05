@@ -17,13 +17,12 @@
                 }
             	}));
 				map.addControl(new OpenLayers.Control.Zoom({alwaysZoom:true}));
-				// map.addControl(new OpenLayers.Control.PanZoomBar());
 				map.addControl(new OpenLayers.Control.KeyboardDefaults());
 				map.addControl(new OpenLayers.Control.MousePosition());
 			},
 			
 			augmentMap: function(map) {
-				map.paddingForPopups = new OpenLayers.Bounds(20, 40, 20, 20);				
+				map.paddingForPopups = new OpenLayers.Bounds(20, 40, 20, 20);
 			},
 			
 			/**
