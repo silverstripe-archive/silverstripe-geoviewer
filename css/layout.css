@@ -56,3 +56,17 @@
 }
 
 
+
+.olLayerGrid .olTileImage {
+    -webkit-transition: opacity 0.2s linear;
+    -moz-transition: opacity 0.2s linear;
+    -o-transition: opacity 0.2s linear;
+    transition: opacity 0.2s linear;
+}
+
+div.olMap div.olControlZoom a {
+	font-size: 23px;
+	height: 32px;
+	width: 32px;
+	line-height: 29px;
+}
