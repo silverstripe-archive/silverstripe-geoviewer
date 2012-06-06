@@ -18,10 +18,19 @@ var p = new OpenLayers.Protocol.WFS({
 
 p.format.setNamespace("feature", "$Storage.URL_WFS");
 
+<% if ClusterFeatures %>
+var strategyCluster = new OpenLayers.Strategy.Cluster();
+strategyCluster.distance = $ClusterDistance;
+
 strategies =  [
 	new OpenLayers.Strategy.Fixed(),
-//	new OpenLayers.Strategy.BBOX(),
+	strategyCluster
 ];
+<% else %>
+strategies =  [
+	new OpenLayers.Strategy.Fixed()
+];
+<% end_if %>
 
 layer = new OpenLayers.Layer.Vector("$ID", {
 	styleMap: styles,
