@@ -13,7 +13,7 @@
  * @subpackage geoserver
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
-class Layer_GeoserverWMS extends Layer {
+class Layer_GeoserverWMS extends Layer_WMS {
 	
 	static $db = array(
 		'LayerName' => 'Varchar(512)',
