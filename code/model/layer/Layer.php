@@ -21,6 +21,7 @@ class Layer extends DataObject {
 		"Title" => "Varchar(255)",
 		"Type" => "Enum(array('overlay','background','contextual'),'overlay')",
 		"Visible" => "Boolean",
+		"Basemap" => "Boolean",		
 		"Queryable" => "Boolean",
 		"Sort" => "Int"
 	);

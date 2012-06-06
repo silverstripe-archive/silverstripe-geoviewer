@@ -69,12 +69,20 @@ class MapObject extends DataObject {
 	}
 
 	function getJavaScript() {
-		$layers = $this->Layers("\"Enabled\" = 1");
 		$js = '';
+		
+		// base layers first
+		$layers = $this->Layers("\"Classname\" = 'Layer' AND \"Enabled\" = 1 AND \"Basemap\" = 1 ");
 		
 		foreach($layers as $layer) {
 			$js .= $layer->getJavaScript();
-			
+		}
+
+		// then add all the others layers
+		$layers = $this->Layers("\"Classname\" = 'Layer' AND \"Enabled\" = 1 AND \"Basemap\" = 0 ");
+		
+		foreach($layers as $layer) {
+			$js .= $layer->getJavaScript();
 		}
 		return $js;
 	}
