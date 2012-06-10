@@ -101,6 +101,8 @@ class GetFeatureXMLParser extends GetFeatureParser implements IGetFeatureParser 
 	 * Parses the response text (in text/plain format), which is returned by a WMS.
 	 *
 	 * @param Array response of the GeoNetwork server (as XML).
+	 *				$item['Namespace'] : String Name of Feature Namespace 
+	 *				$item['ServerResult'] : String of the XML response 
 	 *
 	 * @return Array
 	 */
