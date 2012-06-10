@@ -103,7 +103,9 @@ class GeoserverWFS_GetFeatureCommand extends ControllerCommand {
 		$storage = $layer->Storage();
 		$result = $this->sendRequest($request,$storage);
 
-		return $result;
+		$json = json_decode($result, true);
+
+		return $json;
 	}
 		
 }

@@ -285,41 +285,33 @@ class Feature_Controller extends Controller {
 		$viewableData = new ViewableData();
 		$obj = new DataObjectSet();
 		
-		if (strpos($result,'java.lang.NullPointerException') === false) {
-			$featureTypeObj = DataObject::get_one("FeatureType",sprintf("\"Name\" = '%s' AND \"LayerID\" = '%s'", Convert::raw2sql($featureType),$layer->ID));			
-			
-			$json = json_decode($result, true);
-			$features = array();
-			$featureArray = array();
-
-			if (isset($json['features'])) {
-				$features = $json['features'];
-			}
-						
-			// convert feature properties into a template data structure
-			if($features[0]['properties']) {
-				foreach($features[0]['properties'] as $key => $val) {
-					$obj->push(new ArrayData(array(
-						'attributeName' => $key,
-						'attributeValue' => $val
-					)));
-				}
-				$featureArray = $features[0]['properties'];
-			}
-
-			$viewableData->customise( array(
-				"Layer" => $layer,
-				"FeatureTypes" => $layer->FeatureTypes(),
-				"Items" => $obj,
-				"Feature" => new ArrayData($featureArray),
-				"FeatureIDs" => $featureIDs
-			));
-
-		} else {
-			$viewableData->customise( array(
-				"Message" => 'A web-server error has occurred. Please try again.'
-			));
+		$featureTypeObj = DataObject::get_one("FeatureType",sprintf("\"Name\" = '%s' AND \"LayerID\" = '%s'", Convert::raw2sql($featureType),$layer->ID));			
+		
+		
+		if ($featureTypeObj == null) {
+			throw new Feature_Controller_Exception(sprintf("Feature Type '%s' not defined. Can not render result. Please contact system administrator.",$featureType));
 		}
+		
+		$features = array();
+		$dataObjectSet = new DataObjectSet();
+
+		if (isset($result['features'])) {
+			$features = $result['features'];
+		}
+
+		// convert feature properties into a template data structure
+		foreach($features as $feature) {
+			$dataObjectSet->push(
+				new ArrayData($feature['properties'])
+			);
+		}
+
+		$viewableData->customise( array(
+			"Layer" => $layer,
+			"FeatureTypes" => $layer->FeatureTypes(),
+			"Features" => $dataObjectSet,
+			"FeatureIDs" => $featureIDs
+		));
 		
 		$template = $featureTypeObj->FeatureTypeTemplate;
 		
