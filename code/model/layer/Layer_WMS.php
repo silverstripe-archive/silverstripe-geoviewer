@@ -9,7 +9,6 @@
 class Layer_WMS extends Layer {
 
 	static $db = array(
-		'Basemap' => 'Boolean',  
 	);
 	
 	function getJavaScript() {
