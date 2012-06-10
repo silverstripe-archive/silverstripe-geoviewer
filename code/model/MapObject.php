@@ -70,16 +70,16 @@ class MapObject extends DataObject {
 
 	function getJavaScript() {
 		$js = '';
-		
+
 		// base layers first
-		$layers = $this->Layers("\"Classname\" = 'Layer' AND \"Enabled\" = 1 AND \"Basemap\" = 1 ");
+		$layers = $this->Layers("\"Enabled\" = 1 AND \"Basemap\" = 1 ");
 		
 		foreach($layers as $layer) {
 			$js .= $layer->getJavaScript();
 		}
 
 		// then add all the others layers
-		$layers = $this->Layers("\"Classname\" = 'Layer' AND \"Enabled\" = 1 AND \"Basemap\" = 0 ");
+		$layers = $this->Layers("\"Enabled\" = 1 AND \"Basemap\" = 0 ");
 		
 		foreach($layers as $layer) {
 			$js .= $layer->getJavaScript();
@@ -161,6 +161,7 @@ HTML;
 			$layer->Title = 'New York - Demo';
 			$layer->Enabled = true;
 			$layer->Type = 'contextual';
+			$layer->Basemap = true;
 			$layer->Visible = true;
 			$layer->Queryable = false;
 			$layer->Sort = 1;
@@ -221,6 +222,7 @@ HTML;
 			$layer->Title = 'Google Maps - Street Map';
 			$layer->Enabled = true;
 			$layer->Type = 'contextual';
+			$layer->Basemap = true;
 			$layer->Visible = true;
 			$layer->Queryable = false;
 			$layer->Sort = 1;
