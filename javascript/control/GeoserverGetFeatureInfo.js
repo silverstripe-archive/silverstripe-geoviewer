@@ -135,13 +135,13 @@ OpenLayers.Control.GeoserverGetFeatureInfo = OpenLayers.Class(OpenLayers.Control
         }, (parseFloat(layers[0].params.VERSION) >= 1.3) ?
             {
                 crs: this.map.getProjection(),
-                i: clickPosition.x,
-                j: clickPosition.y
+                i: Math.round(clickPosition.x),
+                j: Math.round(clickPosition.y)
             } :
             {
                 srs: this.map.getProjection(),
-                x: clickPosition.x,
-                y: clickPosition.y
+                x: Math.round(clickPosition.x),
+                y: Math.round(clickPosition.y)
             }
         );
         OpenLayers.Util.applyDefaults(params, this.vendorParams);
