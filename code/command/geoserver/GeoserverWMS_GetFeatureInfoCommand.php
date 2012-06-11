@@ -52,6 +52,7 @@ class GeoserverWMS_GetFeatureInfoCommand extends ControllerCommand {
 		$params['FEATURE_COUNT'] = self::$max_feature_count;
 
 		$url = str_replace('gwc/service/','',$url);
+		
 		$request = new SS_HTTPRequest(
 			'GET',
 			$url,
@@ -110,12 +111,19 @@ class GeoserverWMS_GetFeatureInfoCommand extends ControllerCommand {
 		
 		$params = $parameters['HTTP_parameters'];
 		$url = $parameters['URL'];
-		
+		$namespaces = $parameters['Namespace'];
 		$ogc_request = $this->getWmsGetFeatureInfoRequest($url, $params);
 
-		$response = $this->executeOwsRequest($ogc_request);
+		$result = $this->executeOwsRequest($ogc_request);
+		$parser = new GetFeatureXMLParser2();
+		$parser->setLimit(25);
+		
+		$item = array();
+		$item['Namespace'] = $namespaces;
+		$item['ServerResult'] = $result;
 
-		return $response;
+		$response_features = $parser->parse($item);
+		return $response_features;
 	}
 	
 }

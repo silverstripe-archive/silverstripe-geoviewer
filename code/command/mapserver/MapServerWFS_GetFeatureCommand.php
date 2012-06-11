@@ -105,8 +105,6 @@ class MapServerWFS_GetFeatureCommand extends ControllerCommand {
 
 		$storage = $layer->Storage();
 		$result = $this->sendRequest($request,$storage);
-
-
 		$parser = new GetFeatureXMLParser2();
 		$parser->setLimit(25);
 		

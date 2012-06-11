@@ -38,13 +38,14 @@ class GetFeatureXMLParser2 extends GetFeatureParser implements IGetFeatureParser
 		$featureTypeName = '';
 		
 		foreach($namespace_items as $namespace) {
-			$featureTypeClass = $feature->children($namespace);		
-					
+			$featureTypeClass = $feature->children($namespace['Reference']);							
 			$name = $featureTypeClass->getName();
 
 			if ($name == '') continue;	
 					
 			$featureTypeName = $name;
+			$featureResult['Namespace'] = $namespace['Namespace'];
+			$featureResult['FeatureType'] = $featureTypeName;
 			
 			if (!$this->canParse($featureTypeName)) continue;
 
@@ -79,16 +80,18 @@ class GetFeatureXMLParser2 extends GetFeatureParser implements IGetFeatureParser
 		
 		$used_namespace = array_values($item['Namespace']);
 		$result = $item['ServerResult'];
-				
 		$xml = new SimpleXmlElement($result);
 		
 		$namespaces = $xml->getNameSpaces(true);		
 		$namespace_gml = $namespaces['gml'];
-		
+
 		$items = array();
 		foreach($used_namespace as $namespace) {
 			if (isset($namespaces[$namespace])) {
-				$items[] = $namespaces[$namespace];
+				$items[] = array(
+					"Namespace" => $namespace,
+					"Reference" => $namespaces[$namespace]
+				);
 			}
 		}
 		$this->namespace_items = $items;
@@ -99,7 +102,14 @@ class GetFeatureXMLParser2 extends GetFeatureParser implements IGetFeatureParser
 			$feature = $this->parseFeature($xml_feature);
 			$features[] = $feature;
 		}
-		return array('features' => $features);
+		
+		$func = function($value) {
+		    return $value['Namespace'].":".$value['FeatureType'];
+		};
+		
+		$featureTypesNames = array_unique(array_map($func, $features));
+		return array('features' => $features,
+		             'featureTypesNames' => $featureTypesNames);
 	}			
 }
 
