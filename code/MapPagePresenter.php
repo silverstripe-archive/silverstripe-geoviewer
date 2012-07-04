@@ -3,11 +3,12 @@
  * @package geoviewer
  * @subpackage code
  * @author Rainer Spittel (rainer at silverstripe dot com)
- *
  */
 
 /**
- * Model
+ * @package geoviewer
+ * @subpackage code
+ * @author Rainer Spittel (rainer at silverstripe dot com)
  */
 class MapPagePresenter extends ViewableData {
 
@@ -34,7 +35,6 @@ class MapPagePresenter extends ViewableData {
 	function getJavaScriptFiles() {
 		$js_files = array(
 			'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-			// $this->getModulePath().'/thirdparty/jquery-ui-1.7.2.custom.min.js',
 			$this->getModulePath().'/thirdparty/jquery.entwine/dist/jquery.entwine-dist.js',
 			$this->getModulePath().'/thirdparty/jquery.metadata/jquery.metadata.js',
 		);

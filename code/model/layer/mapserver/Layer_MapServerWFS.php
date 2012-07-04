@@ -1,16 +1,15 @@
 <?php
-
 /**
  * @package geoviewer
- * @subpackage model
+ * @subpackage mapserver
  * @author Rainer Spittel (rainer at silverstripe dot com)
  *
  */
 
 /**
  *
- * @package mapping
- * @subpackage geoserver
+ * @package geoviewer
+ * @subpackage mapserver
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
 class Layer_MapServerWFS extends Layer_WFS {

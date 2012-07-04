@@ -6,6 +6,11 @@
  *
  */
 
+/**
+ * @package geoviewer
+ * @subpackage command
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ */
 class MapServerWFS_GetFeatureCommand extends ControllerCommand {
 
 	/**

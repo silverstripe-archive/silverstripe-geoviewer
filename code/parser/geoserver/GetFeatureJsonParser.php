@@ -3,14 +3,12 @@
  * @package geoviewer
  * @subpackage parser
  * @author Rainer Spittel (rainer at silverstripe dot com)
- *
  */
-
 
 /**
  * Parses a WFS getFeature request as JSON.
  *
- * @package mapping
+ * @package geoviewer
  * @subpackage parser
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */

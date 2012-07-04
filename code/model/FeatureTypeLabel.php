@@ -3,14 +3,11 @@
  * @package geoviewer
  * @subpackage model
  * @author Rainer Spittel (rainer at silverstripe dot com)
- *
  */
 
 
 /**
- * 
- *
- * @package mapping
+ * @package geoviewer
  * @subpackage model
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */

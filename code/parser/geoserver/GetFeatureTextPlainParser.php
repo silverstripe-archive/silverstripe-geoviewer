@@ -3,15 +3,13 @@
  * @package geoviewer
  * @subpackage parser
  * @author Rainer Spittel (rainer at silverstripe dot com)
- *
  */
-
 
 /**
  * GetFeatureTextPlainParser parses a GetFeature WMS response and creates 
  * a dataobjectset which will be used to render to map bubble.
  *
- * @package mapping
+ * @package geoviewer
  * @subpackage parser
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */

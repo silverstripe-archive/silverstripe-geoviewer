@@ -3,9 +3,13 @@
  * @package geoviewer
  * @subpackage command
  * @author Rainer Spittel (rainer at silverstripe dot com)
- *
  */
 
+/**
+ * @package geoviewer
+ * @subpackage command
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ */
 class GeoserverWFS_GetFeatureCommand extends ControllerCommand {
 
 	/**

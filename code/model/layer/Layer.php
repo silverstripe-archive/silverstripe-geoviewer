@@ -1,16 +1,14 @@
 <?php
 /**
  * @package geoviewer
- * @subpackage model
+ * @subpackage layer
  * @author Rainer Spittel (rainer at silverstripe dot com)
  *
  */
 
-
 /**
- * 
  *
- * @package mapping
+ * @package geoviewer
  * @subpackage layer
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */

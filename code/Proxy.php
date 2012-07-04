@@ -3,7 +3,6 @@
  * @package geoviewer
  * @subpackage code
  * @author Rainer Spittel (rainer at silverstripe dot com)
- *
  */
 
 
@@ -12,6 +11,10 @@
  * To avoid any cross-domain issues within the map application (i.e. requesting
  * XML data from features shown on the map via AJAX calls), we use the 
  * proxy controller which delegates requests to the provided URL.
+ *
+ * @package geoviewer
+ * @subpackage code
+ * @author Rainer Spittel (rainer at silverstripe dot com)
  */
 class Proxy_Controller extends Controller {
 	

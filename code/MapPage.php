@@ -7,10 +7,12 @@
  */
 
 /**
- * 
+ * Example Map Page class. 
  *
- * @package mapping
- * @subpackage model
+ * Can be deleted if example code is not required.
+ *
+ * @package geoviewer
+ * @subpackage code
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
 class MapPage extends Page {
@@ -18,12 +20,22 @@ class MapPage extends Page {
 }
 
 /**
+ * Controller for example Map Page type. 
  *
+ * Can be deleted if example code is not required.
+ *
+ *
+ * @package geoviewer
+ * @subpackage code
+ * @author Rainer Spittel (rainer at silverstripe dot com)
  */
 class MapPage_Controller extends Page_Controller {
 
 	/**
-	 * Initialisation function that is run before any action on the controller is called.
+	 * Initialisation any request.
+	 * Is called before any controller action is performed.
+	 *
+	 * @2do: review if Controller has a hook we can use
 	 */
 	public function init() {
 		parent::init();

@@ -6,11 +6,10 @@
  *
  */
 
-
 /**
  * 
  *
- * @package mapping
+ * @package geoviewer
  * @subpackage controller
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */

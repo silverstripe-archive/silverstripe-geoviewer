@@ -1,11 +1,10 @@
 <?php
 /**
  * @package geoviewer
- * @subpackage model
+ * @subpackage fileformat
  * @author Rainer Spittel (rainer at silverstripe dot com)
  *
  */
-
 
 /**
  *

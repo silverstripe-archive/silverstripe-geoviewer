@@ -3,14 +3,10 @@
  * @package geoviewer
  * @subpackage backend
  * @author Rainer Spittel (rainer at silverstripe dot com)
- *
  */
 
-
 /**
- * OGC WebService - Model-Admin class.
- *
- * @package mapping
+ * @package geoviewer
  * @subpackage backend
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */

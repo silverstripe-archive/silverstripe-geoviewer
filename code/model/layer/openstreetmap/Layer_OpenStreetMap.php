@@ -1,17 +1,15 @@
 <?php
 /**
  * @package geoviewer
- * @subpackage model
+ * @subpackage openstreetmap
  * @author Rainer Spittel (rainer at silverstripe dot com)
  *
  */
 
-
 /**
- * 
  *
- * @package mapping
- * @subpackage googlemap
+ * @package geoviewer
+ * @subpackage openstreetmap
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
 class Layer_OpenStreetMap extends Layer {

@@ -1,11 +1,17 @@
 <?php
 /**
  * @package geoviewer
- * @subpackage model
+ * @subpackage layer
  * @author Rainer Spittel (rainer at silverstripe dot com)
  *
  */
 
+/**
+ *
+ * @package geoviewer
+ * @subpackage layer
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ */
 class Layer_WMS extends Layer {
 
 	static $db = array(

@@ -3,14 +3,11 @@
  * @package geoviewer
  * @subpackage backend
  * @author Rainer Spittel (rainer at silverstripe dot com)
- *
  */
 
 
 /**
- * Feature Type - Model-Admin class.
- *
- * @package mapping
+ * @package geoviewer
  * @subpackage backend
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */

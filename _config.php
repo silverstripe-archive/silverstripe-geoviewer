@@ -9,16 +9,13 @@ Proxy_Controller::set_allowed_host(array(
 	'localhost:8080','localhost'
 ));
 
-Object::add_extension('MapPage', 'MapPageDecorator');
+Object::add_extension('MapPage', 'MapPageExtension');
 
 
 $file_extensions = File::$allowed_extensions;
 $file_extensions[] = 'kml';
 $file_extensions[] = 'kmz';
 File::$allowed_extensions = $file_extensions;
-
-
-MapPageDecorator::set_openlayers_path('/thirdparty/openlayers_dev_2.12/lib/OpenLayers.js');
 
 /** 
  * Add to .htaccess file in assets following lines:

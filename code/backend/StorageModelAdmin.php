@@ -10,16 +10,17 @@
  * @subpackage backend
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
-class MapModelAdmin extends ModelAdmin {
+class StorageModelAdmin extends ModelAdmin {
 
-	static $menu_title = "Map and Styles";
+	static $menu_title = "Storages and Files";
 	
-	static $url_segment = "maps";
+	static $url_segment = "storages";
 
 	static $managed_models = array(
-		"MapObject",
-		"StyleMap",
-		"LayerCategory"
+		"StorageGeoserver",
+		"StorageMapServer",
+		"Layer_KML",
+		"Layer_GML"
 	);
 
 	static $allowed_actions = array(

@@ -1,5 +1,17 @@
 <?php
+/**
+ * @package geoviewer
+ * @subpackage mapserver
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ *
+ */
 
+/**
+ *
+ * @package geoviewer
+ * @subpackage mapserver
+ * @author Rainer Spittel (rainer at silverstripe dot com)
+ */
 class Layer_MapServerWMS extends Layer_WMS {
 
 	static $db = array(
