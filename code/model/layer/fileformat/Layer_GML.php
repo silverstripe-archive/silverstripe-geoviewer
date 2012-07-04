@@ -30,7 +30,7 @@ class Layer_GML extends Layer {
 	public function getCMSFields($params = null) {
 		$fields = parent::getCMSFields($params);
 				
-		$fields->addFieldToTab('Root.GML', new FileIFrameField('gmlFile','GML File'));
+		$fields->addFieldToTab('Root.GML', new FileField('gmlFile','GML File'));
 
 		$fields->removeFieldFromTab("Root.FeatureTypes", "FeatureTypes");
 		$fields->removeFieldFromTab("Root", "FeatureTypes");

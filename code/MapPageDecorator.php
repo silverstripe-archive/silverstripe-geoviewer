@@ -7,7 +7,7 @@
  */
 
  
-class MapPageDecorator extends DataObjectDecorator {
+class MapPageDecorator extends DataExtension {
 
 	static $map_presenter_class = 'MapPagePresenter';
 	

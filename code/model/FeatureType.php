@@ -52,34 +52,34 @@ class FeatureType extends DataObject {
 		}
 		return $result;
 	}
-
-	function getLabelTableField() {
-		$tableField = new TableField(
-		  'Labels', // fieldName
-		  'FeatureTypeLabel', // sourceType
-		  array(
-			'Visible' => 'Visible Property',
-			'Label'=>'Label',
-		    'RemoteColumnName'=>'Remote Column Name',
-			'Sort'       =>  'Front-end sorting'
-		  ), // fieldList
-		  array(
-		    'Visible'=>'CheckboxField',
-			'Label'=>'TextField',
-		    'RemoteColumnName'=>'TextField',
-			'Sort'=>'TextField'
-		  ), // fieldTypes
-		  "FeatureTypeID",
-		  $this->ID,
-		  true,
-		  "Sort,Label"
-		);
-		// add some HiddenFields thats saved with each new row
-		$tableField->setExtraData(array(
-		  'FeatureTypeID' => $this->ID ? $this->ID : '$RecordID'
-		));	
-		return $tableField;	
-	}
+	// 
+	// function getLabelTableField() {
+	// 	$tableField = new TableField(
+	// 	  'Labels', // fieldName
+	// 	  'FeatureTypeLabel', // sourceType
+	// 	  array(
+	// 		'Visible' => 'Visible Property',
+	// 		'Label'=>'Label',
+	// 	    'RemoteColumnName'=>'Remote Column Name',
+	// 		'Sort'       =>  'Front-end sorting'
+	// 	  ), // fieldList
+	// 	  array(
+	// 	    'Visible'=>'CheckboxField',
+	// 		'Label'=>'TextField',
+	// 	    'RemoteColumnName'=>'TextField',
+	// 		'Sort'=>'TextField'
+	// 	  ), // fieldTypes
+	// 	  "FeatureTypeID",
+	// 	  $this->ID,
+	// 	  true,
+	// 	  "Sort,Label"
+	// 	);
+	// 	// add some HiddenFields thats saved with each new row
+	// 	$tableField->setExtraData(array(
+	// 	  'FeatureTypeID' => $this->ID ? $this->ID : '$RecordID'
+	// 	));	
+	// 	return $tableField;	
+	// }
 	
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
@@ -90,13 +90,13 @@ class FeatureType extends DataObject {
 		$presenter = singleton(MapPageDecorator::get_map_presenter_class());		
 		Requirements::javascript($presenter->getModulePath().'javascript/FeatureType.js');	
 
-		$tableField = $this->getLabelTableField();
-		$fields->addFieldsToTab("Root.Labels", 
-			array(
-				$tableField, 
-				new LiteralField("label",'<div id=\'info\'><i>Please use pseudo template language to create composite or richer styling<br/>I.e. add \'&lt;a href="$LINK"&gt;$INFO&lt;/a&gt;\' to the \'Retrieve Property\' to have a clickable link in the information bubble.</i></br></div>')
-				)
-			);
+		// $tableField = $this->getLabelTableField();
+		// $fields->addFieldsToTab("Root.Labels", 
+		// 	array(
+		// 		$tableField, 
+		// 		new LiteralField("label",'<div id=\'info\'><i>Please use pseudo template language to create composite or richer styling<br/>I.e. add \'&lt;a href="$LINK"&gt;$INFO&lt;/a&gt;\' to the \'Retrieve Property\' to have a clickable link in the information bubble.</i></br></div>')
+		// 		)
+		// 	);
 		
 		return $fields;
 	}

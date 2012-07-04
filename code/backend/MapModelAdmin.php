@@ -16,12 +16,13 @@
  */
 class MapModelAdmin extends ModelAdmin {
 
-	static $menu_title = "Map";
+	static $menu_title = "Map and Styles";
 	
 	static $url_segment = "maps";
 
 	static $managed_models = array(
 		"MapObject",
+		"StyleMap",
 		"LayerCategory"
 	);
 

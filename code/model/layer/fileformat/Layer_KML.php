@@ -31,7 +31,7 @@ class Layer_KML extends Layer {
 	public function getCMSFields($params = null) {
 		$fields = parent::getCMSFields($params);
 				
-		$fields->addFieldToTab('Root.KML', new FileIFrameField('kmlFile','KML File'));
+		$fields->addFieldToTab('Root.KML', new FileField('kmlFile','KML File'));
 		$fields->addFieldToTab('Root.KML', new TextField('EPSGCode','Projection (in EPSG) for local dataset (i.e. EPSG:4326)'));
 		$fields->removeFieldFromTab("Root.FeatureTypes", "FeatureTypes");
 		$fields->removeFieldFromTab("Root", "FeatureTypes");

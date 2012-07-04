@@ -43,11 +43,11 @@ class LayerCategory extends DataObject {
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		// make the complex table field for layers read only.
-		$layersCTF = $fields->dataFieldByName('Layers');
-		if ($layersCTF) {
-			$layersCTF->setPermissions(array('show'));
-		}
+		// // make the complex table field for layers read only.
+		// $layersCTF = $fields->dataFieldByName('Layers');
+		// if ($layersCTF) {
+		// 	$layersCTF->setPermissions(array('show'));
+		// }
 		return $fields;
 	}
 

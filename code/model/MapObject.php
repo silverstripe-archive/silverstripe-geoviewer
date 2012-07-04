@@ -198,7 +198,7 @@ HTML;
 
 			$layers = $style->WFSLayers();
 			$layers->add($layer);
-			$layers->write();
+			// $layers->write();
 
 			$page = new MapPage();
 			$page->Title = 'New York - Map Demo';
@@ -247,7 +247,7 @@ HTML;
 			
 			$layers = $style->WFSLayers();
 			$layers->add($layer);
-			$layers->write();
+			// $layers->write();
 			
 			$page = new MapPage();
 			$page->Title = 'Google Maps - Demo';
