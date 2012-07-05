@@ -74,17 +74,11 @@ class MapObject extends DataObject {
 	}
 	
 	function getCategories() {
+		$dataList = new DataList('LayerCategory');
+		$dataList->where(sprintf('"Layer"."ID" IS NOT NULL AND "MapID" = %d', $this->ID));
+		$dataList->sort(array("Sort" => "ASC", "Title" => "ASC"));
+		$dataList->leftJoin("Layer",'"LayerCategory"."ID" = "Layer"."LayerCategoryID"');
 		
-		$categories = DataObject::get(
-			'LayerCategory', 
-			sprintf('"Layer"."ID" IS NOT NULL AND "MapID" = %d', $this->ID), 
-			'"Sort" ASC, "Title" ASC', 
-			'LEFT JOIN "Layer" ON "LayerCategory"."ID" = "Layer"."LayerCategoryID"'
-		);
-		// TODO Workaround because the Postgres implementation fails at grouping...
-		// See DataObject->buildSQL()
-		if($categories) $categories->removeDuplicates('ID');
-		
-		return $categories;
+		return $dataList;
 	}
 }

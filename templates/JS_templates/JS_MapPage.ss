@@ -4,21 +4,21 @@
 
 			ControllerName: 'Feature', 
 
-			<% control Map %>
- 			MapID: '$ID', 
+			<% with $MapObject %>
+			<% if ID %>
+			MapID: '$ID', 
 
 			DisplayProjection : new OpenLayers.Projection('$DisplayProjection'),
 			
 			Projection : new OpenLayers.Projection('$Projection'),
 			
-			<% end_control %>
 			initLayers: function() {
 				var self = this;
-				<% control Map %>$JavaScript<% end_control %>
+				$JavaScript
 			},
 
 			loadConfiguration: function() {
-				<% control Map %>
+
 				var map = this.getOLMap();
 
 				var center = new OpenLayers.LonLat($Long, $Lat);
@@ -27,27 +27,48 @@
 		 		map.setCenter(center, $ZoomLevel );
 
 				OpenLayers.ProxyHost="Proxy/dorequest?u=";
-				<% end_control %>
 			},
 
 			getResolutions: function() {
-				<% control Map %>
 				return [ $Resolutions ];
-				<% end_control %>
 			},
 
 			getMinZoomLevel: function() {
-				<% control Map %>
 				return $MinZoomLevel;
-				<% end_control %>
 			},
 
 			getMaxZoomLevel: function() {
-				<% control Map %>
 				return $MaxZoomLevel;
-				<% end_control %>
 			}
+			<% else %>
+			MapID: '', 
 
+			DisplayProjection : new OpenLayers.Projection(''),
+		
+			Projection : new OpenLayers.Projection(''),
+
+			initLayers: function() {
+				$('.initmap')[0].innerHTML = "<div class='initmap_error'><h2>Map is not initialised.</h2><p>Unfortunately this page has not been setup completely.</p><p>If you are a website editor, assign a map to this page via the SilverStripe CMS.<br/>Otherwise contact the website editor please.</p></div>";
+				$('.initmap').removeClass('initmap');
+			},
+
+			loadConfiguration: function() {
+			},
+
+			getResolutions: function() {
+				return null;
+			},
+
+			getMinZoomLevel: function() {
+				return null;
+			},
+
+			getMaxZoomLevel: function() {
+				return null;
+			}
+				
+			<% end_if%>
+			<% end_with %>
 		});
 	});
 

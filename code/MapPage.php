@@ -45,9 +45,9 @@ class MapPage_Controller extends Page_Controller {
 	/**
 	 */
 	function getCategoriesByLayerType($layertype) {
-		$map = $this->dataRecord->Map();
+		$map = $this->dataRecord->MapObject();
 		$categories = $map->getCategories();
-		$retValue = new DataObjectSet();
+		$retValue = new ArrayList();
 
 		if($categories) {
 			foreach($categories as $category) {
@@ -89,10 +89,12 @@ class MapPage_Controller extends Page_Controller {
 	 * @return String
 	 */
 	function CategoriesCacheKey() {
+		$LayerCategory = new DataList("LayerCategory");
+		$layer = new DataList("Layer");
 		return implode('-', array(
-			$this->Map()->ID, 
-			DataObject::Aggregate("LayerCategory")->Max("LastEdited"), 
-			DataObject::Aggregate('Layer')->Max("LastEdited"),
+			$this->MapObject()->ID, 
+			$LayerCategory->Max("LastEdited"),
+			$layer->Max("LastEdited"),
 			$this->request->getVar('layers')
 		));
 	}

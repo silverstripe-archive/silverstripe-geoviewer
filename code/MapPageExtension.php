@@ -17,7 +17,7 @@ class MapPageExtension extends DataExtension {
 	static $openlayers_path = '/thirdparty/openlayers_dev_2.12/lib/OpenLayers.js';
 	
 	static $has_one = array (
-		'Map' => 'MapObject'
+		'MapObject' => 'MapObject'
 	);
 
 	static function get_map_presenter_class() {

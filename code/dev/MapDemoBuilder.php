@@ -68,7 +68,7 @@ class MapDemoBuilder {
 
 		$page = new MapPage();
 		$page->Title = 'New York - Map Demo';
-		$page->MapID = $map->ID;
+		$page->MapObjectID = $map->ID;
 		$page->write();
 		$page->doPublish();
 	}
@@ -100,7 +100,7 @@ class MapDemoBuilder {
 
 		$page = new MapPage();
 		$page->Title = 'Google Maps - Demo';
-		$page->MapID = $map->ID;
+		$page->MapObjectID = $map->ID;
 		$page->write();
 		$page->doPublish();
 	}

@@ -44,3 +44,10 @@ div.olMap {
 	padding-left: 5px;
 	padding-right: 5px;
 }
+
+.initmap_error {
+	padding-top: 37%;
+	line-height: 20px;
+	width: 100%;
+	text-align: center;
+}
