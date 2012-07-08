@@ -94,6 +94,8 @@ class MapPageExtension extends DataExtension {
 		}
 		// Requirements::combine_files('mapper.js', $js_files);
 
+		Requirements::javascript("http://maps.google.com/maps/api/js?v=3&amp;sensor=false");
+
 		$cssFiles = $presenter->getCSSFiles();
 		if (!empty($cssFiles)) {
 			foreach($cssFiles as $file) {

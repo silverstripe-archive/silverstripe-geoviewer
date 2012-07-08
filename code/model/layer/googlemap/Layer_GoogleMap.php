@@ -15,10 +15,10 @@
 class Layer_GoogleMap extends Layer {
 	
 	static $gmap_types = array(
-		"Satellite" => "G_SATELLITE_MAP",
-		"Map" => "G_NORMAL_MAP",
-		"Terrain" => "G_PHYSICAL_MAP",
-		"Hybrid" => "G_HYBRID_MAP"
+		"Satellite" => "google.maps.MapTypeId.SATELLITE",
+		"Map" => "google.maps.MapTypeId.ROADMAP",
+		"Terrain" => "google.maps.MapTypeId.TERRAIN",
+		"Hybrid" => "google.maps.MapTypeId.HYBRID"
 	);
 	
 	static $db = array(

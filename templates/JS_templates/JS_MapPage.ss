@@ -4,8 +4,8 @@
 
 			ControllerName: 'Feature', 
 
-			<% with $MapObject %>
-			<% if ID %>
+			<% if MapObjectID %>
+			<% with MapObject %>
 			MapID: '$ID', 
 
 			DisplayProjection : new OpenLayers.Projection('$DisplayProjection'),
@@ -40,6 +40,7 @@
 			getMaxZoomLevel: function() {
 				return $MaxZoomLevel;
 			}
+			<% end_with %>
 			<% else %>
 			MapID: '', 
 
@@ -68,7 +69,6 @@
 			}
 				
 			<% end_if%>
-			<% end_with %>
 		});
 	});
 

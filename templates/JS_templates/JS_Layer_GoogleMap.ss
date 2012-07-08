@@ -7,9 +7,9 @@ layer = new OpenLayers.Layer.Google(
 	"$ID",
 	$.extend({
 		type: $GMapType, 
-		numZoomLevels: 22,
-     	maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-		<% if isSphericalMercator %>sphericalMercator: true<% end_if %> 
+		numZoomLevels: 22
+//      	maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+//		<% if isSphericalMercator %>sphericalMercator: true<% end_if %> 
 	}, options, {})
 );
 
