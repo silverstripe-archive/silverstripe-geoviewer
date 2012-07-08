@@ -41,13 +41,13 @@ class MapPageExtension extends DataExtension {
 	 * Update the CMS fields, adding some descriptions and text fields to 
 	 * the Browse Page catalogue page.
 	 */
-	function updateCMSFields(FieldSet &$fields) {
+	function updateCMSFields(FieldList $fields) {
 
 		$items = array();
 		$maps  = DataObject::get("MapObject");
 		if ($maps) $items = $maps->map('ID','Title');
 
-		$fields->addFieldsToTab("Root.Content.OpenLayers", 
+		$fields->addFieldsToTab("Root.Main", 
 			array(
 				new LiteralField("MapLabel","<h2>Map Selection</h2>"),
 				// Display parameters
@@ -122,7 +122,7 @@ class MapPageExtension extends DataExtension {
 	 */
 	function Categories() {
 		
-		$map = $this->owner->Map();
+		$map = $this->owner->MapObject();
 		$categories = $map->getCategories();
 		
 		$curr = Controller::curr();
@@ -156,13 +156,16 @@ class MapPageExtension extends DataExtension {
 	 * @return String
 	 */
 	function CategoriesCacheKey() {
+	
 		$curr = Controller::curr();
 		$request = $curr->getRequest();
-
+		
+		$LayerCategory = new DataList("LayerCategory");
+		$layer = new DataList("Layer");
 		return implode('-', array(
-			$this->owner->Map()->ID, 
-			DataObject::Aggregate("LayerCategory")->Max("LastEdited"), 
-			DataObject::Aggregate('Layer')->Max("LastEdited"),
+			$this->owner->MapObject()->ID, 
+			$LayerCategory->Max("LastEdited"),
+			$layer->Max("LastEdited"),
 			$request->getVar('layers')
 		));
 	}
