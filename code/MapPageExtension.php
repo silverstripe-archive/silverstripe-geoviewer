@@ -54,7 +54,7 @@ class MapPageExtension extends DataExtension {
 				new CompositeField( 
 					new CompositeField( 
 						new LiteralField("DefLabel","<h3>Default OpenLayers Map</h3>"),
-						new DropdownField("MapID", "Map", $items, $this->owner->MapID, null, true)
+						new DropdownField("MapObjectID", "Map Object", $items, $this->owner->MapObjectID, null, true)
 					)
 				)
 			)
