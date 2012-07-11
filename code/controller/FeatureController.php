@@ -81,7 +81,7 @@ class Feature_Controller extends Controller {
 			$id = md5(sprintf('%s-%s',$commandName, $storage->URL));
 			
 			if (!isset($actions[$id])) {
-				$set = new DataObjectSet();
+				$set = new ArrayList();
 				$set->push($layer);
 				$actions[$id] = array(
 					"URL" => $storage->URL,
@@ -101,10 +101,10 @@ class Feature_Controller extends Controller {
 	 *
 	 * @param $features array 
 	 *
-	 * @return DataObjectSet
+	 * @return ArrayList
 	 */
 	public function mapOGC2ORM($features) {
-		$response = new DataObjectSet();
+		$response = new ArrayList();
 		
 		if (!$features) {
 			return $response;
@@ -141,7 +141,7 @@ class Feature_Controller extends Controller {
 						$layer = new ArrayData(array(
 							'ID' => $layerID,
 							'Layer' => $DOFeatureType->Layer(),
-							'FeatureTypes' => new DataObjectSet(),
+							'FeatureTypes' => new ArrayList(),
 							'scope' => 'Layers'
 						));
 						$response->push($layer);				
@@ -273,7 +273,7 @@ class Feature_Controller extends Controller {
 							'tiger:poly_landmarks'
 						)
 					),
-					'Layers' => DataObjectSet[ Layer objects ],
+					'Layers' => ArrayList[ Layer objects ],
 				)
 			);
 		*/		
@@ -295,8 +295,8 @@ class Feature_Controller extends Controller {
 				};
 
 				// get FeatureType DataObject
-				$layerIDs = implode(',',array_keys($layerDos->map("ID","ID")));
-
+				$layerIDs = implode(',',$layerDos->map("ID","ID")->keys());
+				
 				$queryItems = explode(':',$featureTypeName);
 
 				$Namespace = $queryItems[0];				
@@ -307,7 +307,10 @@ class Feature_Controller extends Controller {
 				// this query will not detect this. 
 				// in general, the requests would need to be split in two requests to implement this.
 				$featureTypeObj = DataObject::get_one("FeatureType",sprintf("\"Namespace\" = '%s' AND \"Name\" = '%s' AND \"LayerID\" in (%s)", Convert::raw2sql($Namespace),Convert::raw2sql($FeatureType),$layerIDs));			
-				
+				if ($featureTypeObj === false) {
+					continue;
+				}
+
 				$featureArray =  array_filter( $features['ServerResult']['features'], $func );
 				
 				// create result array
@@ -317,7 +320,7 @@ class Feature_Controller extends Controller {
 
 
 				$viewableData = new ViewableData();
-				$dataObjectSet = new DataObjectSet();
+				$dataObjectSet = new ArrayList();
 
 				// convert feature properties into a template data structure
 				foreach($featureArray as $feature) {
@@ -326,10 +329,12 @@ class Feature_Controller extends Controller {
 					);
 				}
 
+
 				$viewableData->customise( array(
 					"Layer" => $featureTypeObj->Layer(),
 					"FeatureTypes" => $featureTypeObj,
-					"Features" => $dataObjectSet
+					"Features" => $dataObjectSet,
+					"FeatureIDs" => ""
 				));
 
 				$template = $featureTypeObj->FeatureTypeTemplate;
@@ -411,7 +416,7 @@ class Feature_Controller extends Controller {
 		}
 		
 		$features = array();
-		$dataObjectSet = new DataObjectSet();
+		$dataObjectSet = new ArrayList();
 
 		if (isset($result['features'])) {
 			$features = $result['features'];
