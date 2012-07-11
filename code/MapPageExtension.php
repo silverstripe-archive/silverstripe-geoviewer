@@ -123,32 +123,33 @@ class MapPageExtension extends DataExtension {
 	 * to inject visible states for layers based on GET parameters.
 	 */
 	function Categories() {
-		
 		$map = $this->owner->MapObject();
 		$categories = $map->getCategories();
-		
+
+		$result = new ArrayList();
 		$curr = Controller::curr();
 		$request = $curr->getRequest();
 	
 		// Optionally set layer visible state from GET params
-		$selectedLayerIds = explode(',', $request->getVar('layers'));
+		// $selectedLayerIds = explode(',', $request->getVar('layers'));
 		if($categories) foreach($categories as $category) {
 			$layers = $category->getEnabledLayers($map,'overlay');
-			if($layers) foreach($layers as $layer) {
-			//	$layer->Visible = true; 
-				// (
-				// 	in_array($layer->ogc_name, $selectedLayerIds) 
-				// 	// Only default to Visible database setting if 'layers' GET param isnt defined.
-				// 	// Otherwise we assume the user wants to override these defaults.
-				// 	|| ($layer->Visible && !$selectedLayerIds)
-				// );
-//				echo $layer->Title ." : ". $layer->isVisible();
-			}
+// 			if($layers) foreach($layers as $layer) {
+// 			//	$layer->Visible = true; 
+// 				// (
+// 				// 	in_array($layer->ogc_name, $selectedLayerIds) 
+// 				// 	// Only default to Visible database setting if 'layers' GET param isnt defined.
+// 				// 	// Otherwise we assume the user wants to override these defaults.
+// 				// 	|| ($layer->Visible && !$selectedLayerIds)
+// 				// );
+// //				echo $layer->Title ." : ". $layer->isVisible();
+// 			}
 			// Works by object reference, so is accessible in the template
-			$category->OverlayLayersEnabledAndVisible = $layers;
-		}
 
-		return $categories;
+			$category->OverlayLayersEnabledAndVisible = $layers;
+			$result->add($category);
+		}
+		return $result;
 	}
 	
 	/**
