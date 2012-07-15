@@ -15,11 +15,13 @@ class FeatureType extends DataObject {
 	static $db = array(
 		"Namespace" => "Varchar(128)",
 		"Name" => "Varchar(256)",
+		"Title" => "Varchar(256)",
 		"FeatureTypeTemplate" => "Text"
 	);
 	
 	static $has_one = array(
-		"Layer" => "Layer"
+		"Layer" => "Layer",
+		"Storage" => "Storage"
 	);
 
 	static $has_many = array(
