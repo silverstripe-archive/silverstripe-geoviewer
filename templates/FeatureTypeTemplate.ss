@@ -7,7 +7,7 @@
 	<div class='bubbleContent'>
 		<ul><% with FeatureType %><% loop LabelsForTheTemplate %>
 			<li class='row <% if Odd %>odd<% end_if %>'>
-				<span class='label'>$Label</span><p class='value'>\$$RemoteColumnName</p>
+				<span class='label'>$Label</span><p class='value'>$RemoteColumnName.RAW</p>
 			</li><% end_loop %><% end_with %>
 		</ul>
 	</div>

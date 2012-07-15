@@ -96,7 +96,7 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 				}
 			
 				// update remote information only (remote column name - this will never change) and data type.
-				$labelObj->RemoteColumnName = $name;
+				$labelObj->RemoteColumnName = "$".$name;
 				$labelObj->DataType         = $type;
 			
 				// if datatype is a gml object, set geometry flag
