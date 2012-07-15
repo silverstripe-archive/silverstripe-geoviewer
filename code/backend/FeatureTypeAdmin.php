@@ -21,66 +21,94 @@ class FeatureTypeAdmin extends ModelAdmin {
 		"FeatureType",
 	);
 	
-	// static $record_controller_class = "FeatureTypeAdmin_RecordController";
-
 	static $allowed_actions = array(
+		"doImportLabels",
+		"doCreateTemplate",
+		"doDeleteLabels"
 	);
 	
 	/**
-	 * Initialize the model admin interface. Sets up embedded jquery libraries and requisite plugins.
-	 * 
-	 * @todo remove reliance on urlParams
 	 */
 	public function init() {
 		parent::init();
-		$presenter = singleton(MapPageExtension::get_map_presenter_class());	
-		Requirements::javascript($presenter->getModulePath().'/javascript/backend/FeatureType.js');
 	}	
+
+	/**
+	 * This method is a controller action, called by the CMS backend controller.
+	 * The FeatureType dataobject creates a 'Import Labels' butten which triggers
+	 * this action method. The method sends of a request to retrieve all available
+	 * labels of the selected feature class.
+	 * This action requires an ID get parameter.
+	 */
+	public function doImportLabels($request) {
+		$params = $request->getVars();
+
+		$ID = $params['ID'];
+		$featureType = DataObject::get_by_id('FeatureType',$ID);
+		if ($featureType == false) {
+			$this->response->addHeader('X-Status', "FeatureType not known to the system.");			
+			return;
+		}
+
+		$data = array(
+			'FeatureType' => $featureType
+		);
+		
+		// get command and execute command
+		$message = "";
+		try {
+			$cmd = $this->getCommand('ImportFeatureTypeLabels', $data);
+
+			$result = $cmd->execute();
+			$message = sprintf(
+				"%s labels for '%s' has been imported sucessfully.",
+				$result, $featureType->getFeatureTypeName());
+		} 
+		catch(Exception $e) {
+			$message = sprintf("FeatureType import failed. Please try again. <br/>Error Message: '%s'", $e->getMessage());
+		}
+		$this->response->addHeader('X-Status', $message);
+	}	
+
+	public function doDeleteLabels($request) {
+		$params = $request->getVars();
+
+		$ID = $params['ID'];
+		$featureType = DataObject::get_by_id('FeatureType',$ID);
+		if ($featureType == false) {
+			$this->response->addHeader('X-Status', "FeatureType not known to the system.");			
+			return;
+		}
+
+		$labels = $featureType->Labels();
+
+		$count = $labels->count();
+		foreach($labels as $label) {
+			$label->delete();
+		}
+		$this->response->addHeader('X-Status', sprintf("All %d labels has been deleted.",$count));			
+	}
+
+	public function doCreateTemplate($request) {
+		$params = $request->getVars();
+
+		$ID = $params['ID'];
+		$featureType = DataObject::get_by_id('FeatureType',$ID);
+		if ($featureType == false) {
+			$this->response->addHeader('X-Status', "FeatureType not known to the system.");			
+			return;
+		}
+
+		$viewableData = new ViewableData();
+
+
+		$viewableData->customise( array(
+			"FeatureType" => $featureType
+		));
+		
+
+		$featureType->FeatureTypeTemplate = $viewableData->renderWith( "FeatureTypeTemplate" );
+		$featureType->write();
+		$this->response->addHeader('X-Status', "Template created");
+	}
 }
-// 
-// /**
-//  * Feature Type - Record Controller class.
-//  *
-//  * @package mapping
-//  * @subpackage backend
-//  * @author Rainer Spittel (rainer at silverstripe dot com)
-//  */
-// class FeatureTypeAdmin_RecordController extends ModelAdmin_RecordController {
-// 
-// 	static $allowed_actions = array('edit', 'view', 'EditForm', 'ViewForm', 'doimportlabels');
-// 	
-// 	protected $import_message = '';
-// 
-// 	/**
-// 	 * Edit action - shows a form for editing this record
-// 	 */
-// 	function doImportLabels($data, $form, $request) {
-// 
-// 		$featureType = $this->currentRecord;
-// 		$featureTypeID =  $featureType->ID;
-// 
-// 		$data = array(
-// 			'FeatureType' => $featureType
-// 		);
-// 		
-// 		// get command and execute command
-// 		try {
-// 			$cmd = $this->getCommand('ImportFeatureTypeLabels', $data);
-// 			$result = $cmd->execute();
-// 
-// 			$message = sprintf("Feature type structure '%s' has been imported sucessfully.",$featureType);
-// 			$form->sessionMessage( $message, 'good');
-// 		} 
-// 		catch(Exception $e) {
-// 			$message = sprintf("FeatureType import failed. Please try again. <br/>Error Message: '%s'", $e->getMessage());
-// 			$form->sessionMessage( $message, 'bad');
-// 		}
-// 		
-// 		// Behaviour switched on ajax.
-// 		if(Director::is_ajax()) {
-// 			return $this->edit($request);
-// 		} else {
-// 			Director::redirectBack();
-// 		}
-// 	}
-// }

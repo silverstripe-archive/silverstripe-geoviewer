@@ -31,6 +31,7 @@ class LayerCategory extends DataObject {
 	
 	static $plural_name = 'Categories';
 	
+
 	/** 
 	 * Customise getCMSFields.
 	 *

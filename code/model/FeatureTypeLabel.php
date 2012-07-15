@@ -5,7 +5,6 @@
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
 
-
 /**
  * @package geoviewer
  * @subpackage model
@@ -24,7 +23,7 @@ class FeatureTypeLabel extends DataObject {
 	);
 
 	static $has_one = array(
-			'FeatureType' => 'FeatureType'
+		'FeatureType' => 'FeatureType'
 	);
 
 	static $summary_fields = array(

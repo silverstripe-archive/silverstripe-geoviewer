@@ -253,7 +253,7 @@ class Feature_Controller extends Controller {
 		$commandList = $this->getActions($layerDos, "GetFeatureInfo");
 
 		$response_features = $this->executeCommands($commandList, $param);
-		
+
 		/*
 			$response_features :
 		
@@ -336,7 +336,6 @@ class Feature_Controller extends Controller {
 					"Features" => $dataObjectSet,
 					"FeatureIDs" => ""
 				));
-
 				$template = $featureTypeObj->FeatureTypeTemplate;
 
 				// if a template in the CMS is defined, use the template insteat of the default template.
@@ -446,6 +445,8 @@ class Feature_Controller extends Controller {
 		
 		return $viewableData->renderWith( self::get_template_name($action) );
 	}
+
+
 }
 
 /**

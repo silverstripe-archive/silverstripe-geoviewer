@@ -25,7 +25,7 @@ class FeatureType extends DataObject {
 	static $has_many = array(
 		"Labels" => "FeatureTypeLabel"
 	);
-	
+
 	static $summary_fields = array(
 		'Name',
 		'Layer.Title',
@@ -40,7 +40,7 @@ class FeatureType extends DataObject {
 	 *
 	 * @return string namespace and featuretype-name
 	 */
-	function getFeatureTypeName() {
+	public function getFeatureTypeName() {
 		$result = $this->Name;
 		
 		if ($this->Namespace) {
@@ -48,56 +48,66 @@ class FeatureType extends DataObject {
 		}
 		return $result;
 	}
-	// 
-	// function getLabelTableField() {
-	// 	$tableField = new TableField(
-	// 	  'Labels', // fieldName
-	// 	  'FeatureTypeLabel', // sourceType
-	// 	  array(
-	// 		'Visible' => 'Visible Property',
-	// 		'Label'=>'Label',
-	// 	    'RemoteColumnName'=>'Remote Column Name',
-	// 		'Sort'       =>  'Front-end sorting'
-	// 	  ), // fieldList
-	// 	  array(
-	// 	    'Visible'=>'CheckboxField',
-	// 		'Label'=>'TextField',
-	// 	    'RemoteColumnName'=>'TextField',
-	// 		'Sort'=>'TextField'
-	// 	  ), // fieldTypes
-	// 	  "FeatureTypeID",
-	// 	  $this->ID,
-	// 	  true,
-	// 	  "Sort,Label"
-	// 	);
-	// 	// add some HiddenFields thats saved with each new row
-	// 	$tableField->setExtraData(array(
-	// 	  'FeatureTypeID' => $this->ID ? $this->ID : '$RecordID'
-	// 	));	
-	// 	return $tableField;	
-	// }
 	
-	function getCMSFields() {
+	/**
+	 * Return the datalist of visible and retrievable labels only,
+	 * sorted by the 'sort' number.
+	 * Used the by FeatureTypeTemplate creation bua the 
+	 * FeatureTypeAdmin::doCreateTemplate action.
+	 */
+	public function getLabelsForTheTemplate() {
+		$list = $this->Labels();
+		$list->where('Visible = \'1\' AND Retrieve = \'1\'');
+		$list->sort('Sort ASC, Label ASC');
+		return $list;
+	}
+
+
+	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 
 		$controller = Controller::curr();
-		$link = Controller::join_links($controller->Link());
-
-		$presenter = singleton(MapPageExtension::get_map_presenter_class());		
-		Requirements::javascript($presenter->getModulePath().'javascript/FeatureType.js');	
-
-		// $tableField = $this->getLabelTableField();
-		// $fields->addFieldsToTab("Root.Labels", 
-		// 	array(
-		// 		$tableField, 
-		// 		new LiteralField("label",'<div id=\'info\'><i>Please use pseudo template language to create composite or richer styling<br/>I.e. add \'&lt;a href="$LINK"&gt;$INFO&lt;/a&gt;\' to the \'Retrieve Property\' to have a clickable link in the information bubble.</i></br></div>')
-		// 		)
-		// 	);
 		
+		$ID = $this->ID;
+		if ($ID) {
+			$fields->addFieldsToTab('Root.Main', array(
+				new LiteralField(
+					'importLabels',
+					sprintf(
+						'<a class="ss-ui-button ss-ui-action ui-button-text-icon-primary ss-ui-button-ajax" data-icon="arrow-circle-double" title="%s" href="%s">%s</a>',
+						'Refresh the list of available labels for this featuretype ('.$this->getFeatureTypeName().').',
+						$controller->Link("FeatureType/doImportLabels?ID=$ID"),
+						'Import Labels'
+					)
+				),
+				new LiteralField(
+					'deleteLabels',
+					sprintf(
+						'<a class="ss-ui-button ss-ui-action ui-button-text-icon-primary ss-ui-button-ajax ss-ui-action-destructive" data-icon="arrow-circle-double" title="%s" href="%s">%s</a>',
+						'Delete all labels for this featuretype ('.$this->getFeatureTypeName().').',
+						$controller->Link("FeatureType/doDeleteLabels?ID=$ID"),
+						'Delete Labels'
+					)
+				))		
+			);
+
+			if ($this->Labels()->count() > 0) {
+
+					$createTemplateButton = new LiteralField('TemplateButton',
+						sprintf(
+							'<div class="field"><div class="middleColumn"><a class="ss-ui-button ss-ui-action ui-button-text-icon-primary ss-ui-button-ajax" data-icon="arrow-circle-double" title="%s" href="%s">%s</a></div></div>',
+							sprintf('Create template for %s based on label configuration.',$this->getFeatureTypeName()),
+							$controller->Link("FeatureType/doCreateTemplate?ID=$ID"),
+							'Create Template'
+						));
+
+				$fields->insertBefore($createTemplateButton,'FeatureTypeTemplate');
+			}
+		}
 		return $fields;
 	}
 	
-	function getLayerLegendURL() {
+	public function getLayerLegendURL() {
 		$geoserverUrl = $this->Layer()->Storage()->URL;
 		$geoserverUrl = str_replace('/gwc/service','',$geoserverUrl);
 		
@@ -109,16 +119,7 @@ class FeatureType extends DataObject {
 	}	
 	
 	/**
-	 */
-	public function getCMSActions() {
-		
-		$actions = parent::getCMSActions();
-		$actions->push(new FormAction("doImportLabels", "Import Labels"));		
-		return $actions;
-	}
-
-	/**
-	 * todo: check
+	 * Delete all labels, associated to this feature type as well.
 	 */
 	protected function onBeforeDelete() { 
 		parent::onBeforeDelete();
@@ -128,6 +129,5 @@ class FeatureType extends DataObject {
 			$label->delete();
 		}
 	}
-
 
 }
