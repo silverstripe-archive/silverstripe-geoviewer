@@ -54,11 +54,11 @@ class FeatureTypeAdmin extends ModelAdmin {
 			'FeatureType' => $featureType
 		);
 		
+
 		// get command and execute command
 		$message = "";
 		try {
 			$cmd = $this->getCommand('ImportFeatureTypeLabels', $data);
-
 			$result = $cmd->execute();
 			$message = sprintf(
 				"%s labels for '%s' has been imported sucessfully.",
@@ -70,6 +70,10 @@ class FeatureTypeAdmin extends ModelAdmin {
 		$this->response->addHeader('X-Status', $message);
 	}	
 
+	/**
+	 * This action requests the labels of a feature type and stores the label structure as part of the
+	 * selected featuretype.
+	 */
 	public function doDeleteLabels($request) {
 		$params = $request->getVars();
 
@@ -89,6 +93,10 @@ class FeatureTypeAdmin extends ModelAdmin {
 		$this->response->addHeader('X-Status', sprintf("All %d labels has been deleted.",$count));			
 	}
 
+	/**
+	 * This action iterates through the stored labels of a selected feature type and uses
+	 * the standard template to load the configured labels into a template structure.
+	 */
 	public function doCreateTemplate($request) {
 		$params = $request->getVars();
 
@@ -100,7 +108,6 @@ class FeatureTypeAdmin extends ModelAdmin {
 		}
 
 		$viewableData = new ViewableData();
-
 
 		$viewableData->customise( array(
 			"FeatureType" => $featureType
