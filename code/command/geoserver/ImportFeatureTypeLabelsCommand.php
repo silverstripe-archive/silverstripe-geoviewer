@@ -121,7 +121,6 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 		$response = null;
 		$parameters = $this->getParameters();
 		$featureType = $parameters['FeatureType'];		
-		
 
 		$data = array(
 			'FeatureType' => $featureType

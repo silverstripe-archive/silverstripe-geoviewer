@@ -25,14 +25,11 @@ class GeoserverWFS_DescribeFeatureTypeCommand extends ControllerCommand {
 		if($featureType == null){
 			throw new GeoserverWFS_DescribeFeatureTypeCommand_Exception("Internal error: Undefined feature type.");
 		} else 
-		if($featureType->Layer() == null){
-			throw new GeoserverWFS_DescribeFeatureTypeCommand_Exception("Feature Type is not assigned to a layer. Please check the feature type configuration.");
-		} else 
-		if($featureType->Layer()->Storage() == null){
+		if($featureType->Storage() == null){
 			throw new GeoserverWFS_DescribeFeatureTypeCommand_Exception("Feature Type is not assigned to a storage. Please check the layer configuration.");
 		}  
 
-		$geoserver_url = $featureType->Layer()->Storage()->URL;
+		$geoserver_url = $featureType->Storage()->URL;
 		$geoserver_url = str_replace("http://","",$geoserver_url);
 		$geoserver_url = str_replace("/wms","/wfs",$geoserver_url);
 		$geoserver_url = str_replace("/service/","/",$geoserver_url);
@@ -90,7 +87,7 @@ class GeoserverWFS_DescribeFeatureTypeCommand extends ControllerCommand {
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $owsRequest->getBody());
 		}
 
-		$storage = $featureType->Layer()->Storage();
+		$storage = $featureType->Storage();
 		if($storage->Username && $storage->Password) {
 			curl_setopt($ch, CURLOPT_USERPWD, $storage->Username . ':' . $storage->Password);
 		}
