@@ -12,17 +12,9 @@
  * @subpackage geoserver
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
-class StorageGeoserver extends DataObject {
+class StorageGeoserver extends Storage {
 	
 	static $db = array (
-		'Enable' => 'Boolean',
-		'Title' => "Varchar(255)",
-		'URL' => "Varchar(255)",
-		'UseMultiCache' => "Boolean",
-		'Cache_URL_01' => "Varchar(255)",
-		'Cache_URL_02' => "Varchar(255)",
-		'Cache_URL_03' => "Varchar(255)",
-		'Cache_URL_04' => "Varchar(255)",
 		'URL_WFS' => "Varchar(255)",
 		'Username' => "Varchar(255)",
 		'Password' => "Varchar(255)",
@@ -45,7 +37,26 @@ class StorageGeoserver extends DataObject {
 			new LiteralField('Desc3',"<h3>Authentication</h3><p>Use Authentication if data is protected (this feature is in beta).</p>"), 'Username'
 		);
 
+		$controller = Controller::curr();
+
+		$fields->addFieldsToTab('Root.Main', array(
+			new LiteralField(
+				'importFeatureTypes',
+				sprintf(
+					'<a class="ss-ui-button ss-ui-action ui-button-text-icon-primary ss-ui-button-ajax" data-icon="arrow-circle-double" title="%s" href="%s">%s</a>',
+					'Refresh the list of available featuretypes for this WFS Service.',
+					$controller->Link("StorageGeoserver/doImportFeatureTypes?ID=".$this->ID),
+					'Import Feature Types'
+				)
+			)
+		));
+
+
 		return $fields;
 	}
+
+	// http://www.geoviewer.umwelt.bremen.de:8080/geoserver/wms?request=getCapabilities
+
+	// http://www.geoviewer.umwelt.bremen.de:8080/geoserver/wfs?service=wfs&version=1.1.0&request=getcapabilities
 }
 ?>

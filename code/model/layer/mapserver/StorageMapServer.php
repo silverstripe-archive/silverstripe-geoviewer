@@ -12,7 +12,7 @@
  * @subpackage mapserver
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
-class StorageMapServer extends DataObject {
+class StorageMapServer extends Storage {
 
 	
 	static $db = array (
