@@ -19,7 +19,9 @@ class FeatureTypeLabel extends DataObject {
 	//		'DataType'         => 'Varchar(50)',
 			'IsGeometry'       => 'Boolean',
 			'Retrieve'		   => 'Boolean',
-			'Sort'			   => 'Int'
+			'Sort'			   => 'Int',
+			'Verified'         => 'Boolean'
+
 	);
 
 	static $has_one = array(

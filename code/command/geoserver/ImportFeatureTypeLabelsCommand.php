@@ -74,7 +74,7 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 			
 				$ns_type = explode(":",$type);
 			
-				$labels = $featureType->Labels(sprintf("\"RemoteColumnName\"='%s'",Convert::raw2sql($name)));
+				$labels = $featureType->Labels(sprintf("\"RemoteColumnName\"='$%s'",Convert::raw2sql($name)));
 
 				if ($labels->Count() > 1) {
 					throw new ImportFeatureTypeLabelsCommand_Exception("Fatal error: Constraint error - labels for feature types must be unique.");			
@@ -83,7 +83,6 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 
 				if (!$labelObj) {
 					$labelObj = new FeatureTypeLabel();
-				
 					$labelObj->Visible = true;
 					$labelObj->Retrieve = true;
 					$labelObj->Sort = $i+1;
@@ -98,6 +97,7 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 				// update remote information only (remote column name - this will never change) and data type.
 				$labelObj->RemoteColumnName = "$".$name;
 				$labelObj->DataType         = $type;
+				$labelObj->Verified 		= true;
 			
 				// if datatype is a gml object, set geometry flag
 				if ($ns_type[0] == 'gml') {
@@ -129,6 +129,12 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 		// get command and execute command
 		$cmd = $this->getController()->getCommand('GeoserverWFS_DescribeFeatureType', $data);
 		$xml = $cmd->execute();
+
+		// reset all 'Verified' flags to false
+		foreach ( $featureType->Labels() as $label) {
+			$label->Verified = false;
+			$label->write();
+		}
 
 		$response = $this->createOrUpdateColumns($xml);
 
