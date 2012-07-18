@@ -388,7 +388,7 @@ class Feature_Controller extends Controller {
 		}
 		$featureType = Convert::raw2sql($featureStructure[0]);
 
-		$layer = DataObject::get_one('Layer',sprintf("FeatureType = '%s' AND MapID = '%s'",$featureType,$mapID));
+		$layer = DataObject::get_one('Layer_WFS',sprintf("FeatureType = '%s' AND MapID = '%s'",$featureType,$mapID));
 		
 		if (!$layer) {
 			throw new Feature_Controller_Exception(sprintf("Unknown feature type: '%s'",$featureType));
