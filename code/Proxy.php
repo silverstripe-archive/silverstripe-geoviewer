@@ -35,7 +35,17 @@ class Proxy_Controller extends Controller {
 	 * @return array list of all allowed hosts
 	 */
 	static function get_allowed_host() {
-		return self::$allowed_host;
+		
+		$list = DataObject::get('Storage');
+		$list->where("URL_WFS != ''");
+		$list = $list->map('URL_WFS','URL_WFS')->keys();
+		
+		$url = array();
+		foreach($list as $item) {
+			$items = explode("/",$item);
+			$url[] = $items[2];
+		}
+		return $url; //self::$allowed_host;
 	}
 	
 	/**
