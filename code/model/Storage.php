@@ -10,7 +10,8 @@ class Storage extends DataObject {
 		'Cache_URL_01' => "Varchar(255)",
 		'Cache_URL_02' => "Varchar(255)",
 		'Cache_URL_03' => "Varchar(255)",
-		'Cache_URL_04' => "Varchar(255)"
+		'Cache_URL_04' => "Varchar(255)",
+		'URL_WFS' => "Varchar(255)"		
 	);	
 
 	static $has_many = array(

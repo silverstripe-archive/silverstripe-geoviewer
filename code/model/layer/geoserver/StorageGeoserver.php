@@ -15,7 +15,6 @@
 class StorageGeoserver extends Storage {
 	
 	static $db = array (
-		'URL_WFS' => "Varchar(255)",
 		'Username' => "Varchar(255)",
 		'Password' => "Varchar(255)",
 	);
