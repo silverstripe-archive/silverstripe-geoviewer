@@ -14,6 +14,12 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 	
 	static protected $xsd_namespace = "http://www.w3.org/2001/XMLSchema";
 
+	public $labels_updated = 0;
+
+	public $labels_created = 0;
+
+	public $labels_obsolete = 0;
+
 	static function set_xsd_namespace($url){
 		self::$xsd_namespace = $url;
 	}
@@ -39,9 +45,12 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 	 */
 	protected function createOrUpdateColumns($xml) {
 		$count = 0;
-		
+
 		$parameters = $this->getParameters();
 		$featureType = $parameters['FeatureType'];
+
+		$this->labels_obsolete = $featureType->Labels()->count();
+		
 		if (!$featureType) {
 			throw new ImportFeatureTypeLabelsCommand_Exception("Fatal error: Unknown feature type.");			
 		}
@@ -111,7 +120,15 @@ class ImportFeatureTypeLabelsCommand extends ControllerCommand {
 				
 				$count++;
 				$labelObj->write();
-				$featureType->Labels()->add($labelObj);
+
+				if ($labelObj->FeatureTypeID == 0) {
+					$featureType->Labels()->add($labelObj);
+					$this->labels_created++;
+					$this->labels_obsolete--;
+				} else {
+					$this->labels_updated++;
+					$this->labels_obsolete--;
+				}
 			}
 		}
 		return $count;
