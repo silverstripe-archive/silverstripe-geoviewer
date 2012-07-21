@@ -50,13 +50,19 @@ class StorageGeoserver extends Storage {
 				)
 			)
 		));
-
-
 		return $fields;
 	}
 
-	// http://www.geoviewer.umwelt.bremen.de:8080/geoserver/wms?request=getCapabilities
+/* 
+ TEST URLS
 
-	// http://www.geoviewer.umwelt.bremen.de:8080/geoserver/wfs?service=wfs&version=1.1.0&request=getcapabilities
+	http://194.95.255.163:8080/geoserver/gwc/service/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=getcapabilities
+	http://194.95.255.163:8080/geoserver/gwc/service/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=getcapabilities&TILED=true
+
+	http://www.geoviewer.umwelt.bremen.de:8080/geoserver/wms?request=getCapabilities
+	http://www.geoviewer.umwelt.bremen.de:8080/geoserver/wfs?service=wfs&version=1.1.0&request=getcapabilities
+
+ 
+*/	
 }
 ?>
