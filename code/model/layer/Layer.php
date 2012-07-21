@@ -57,6 +57,34 @@ class Layer extends DataObject {
 		return 'false';
 	}
 
+
+	public function getCMSFields() {
+
+		Requirements::css('geoviewer/css/modeladmin_layer.css');
+		$fields = parent::getCMSFields();
+
+		$fields->removeByName('FeatureTypes');
+		
+		if ($this->hasMethod('Storage')) {
+
+			$featuretypeList = DataObject::get("FeatureType","StorageID = '".$this->StorageID."'");
+			$map = $featuretypeList->map("ID","FeatureTypeName");
+			$featuretypes = new CheckboxSetField(
+				$name = 'FeatureTypes',
+				$title = 'Based on following FeaturesType',
+				$source = $map,
+				$value = "1"
+			);
+
+		 	$fields->addFieldToTab('Root.Main',
+				$featuretypes
+			);
+		}
+
+
+		return $fields;
+	}
+
 	/**
 	 * Really just a temporary helper to make the filenames in our test data more readable.
 	 * 
