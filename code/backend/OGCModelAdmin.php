@@ -12,9 +12,9 @@
  */
 class OGCModelAdmin extends ModelAdmin {
 
-	static $menu_title = "Map Sources";
+	static $menu_title = "Map Layers";
 	
-	static $url_segment = "mapsources";
+	static $url_segment = "maplayers";
 
 	static $managed_models = array(
 		"Layer_GoogleMap",
