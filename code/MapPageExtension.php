@@ -14,7 +14,7 @@ class MapPageExtension extends DataExtension {
 
 	static $map_presenter_class = 'MapPagePresenter';
 	
-	static $openlayers_path = '/thirdparty/openlayers_dev_2.12/lib/OpenLayers.js';
+	static $openlayers_path = '/thirdparty/OpenLayers-2.12/lib/OpenLayers.js';
 	
 	static $has_one = array (
 		'MapObject' => 'MapObject'
@@ -94,7 +94,6 @@ class MapPageExtension extends DataExtension {
 		}
 		// Requirements::combine_files('mapper.js', $js_files);
 
-		Requirements::javascript("http://maps.google.com/maps/api/js?v=3&amp;sensor=false");
 
 		$cssFiles = $presenter->getCSSFiles();
 		if (!empty($cssFiles)) {
@@ -103,13 +102,11 @@ class MapPageExtension extends DataExtension {
 			}
 			// Requirements::combine_files('mapper.css', $cssFiles );
 		}
-		
 		// we need to add call to js maps somehow, any better way?
-		if ($this->owner->MapID) {
-			$googleCheck = DataObject::get_one('Layer_GoogleMap',"\"MapID\" = ".$this->owner->MapID." AND \"Enabled\" = 1");
+		if ($this->owner->MapObjectID) {
+			$googleCheck = DataObject::get_one('Layer_GoogleMap',"\"MapID\" = ".$this->owner->MapObjectID." AND \"Enabled\" = 1");
 			if($googleCheck){
-				$api_key = $presenter->GoogleMapAPIKey();
-				Requirements::javascript("http://maps.google.com/maps?file=api&amp;v=2&amp;key={$api_key}&amp;sensor=true");
+				Requirements::javascript("http://maps.google.com/maps/api/js?v=3&amp;sensor=false");
 			}
 		}
 		Requirements::customScript($presenter->getJavaScript($this->owner->data()));
