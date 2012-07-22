@@ -12,7 +12,7 @@
  */
 class MapModelAdmin extends ModelAdmin {
 
-	static $menu_title = "Map and Styles";
+	static $menu_title = "Maps and Styles";
 	
 	static $url_segment = "maps";
 
