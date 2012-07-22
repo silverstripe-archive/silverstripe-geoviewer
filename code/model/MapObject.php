@@ -47,8 +47,8 @@ class MapObject extends DataObject {
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		$fields->addFieldsToTab('Root.Main', array (
-	//		new LiteralField('MapPreview',sprintf('<a href=\'$s\' target=\'_mappreview\'>Map preview</a>'))
+		$fields->addFieldsToTab('Root.MapBuilder', array (
+			new LiteralField('MapPreview',sprintf('<a href=\'$s\' target=\'_mappreview\'>Map preview</a>'))
 		));
 		
 		return $fields;
