@@ -347,6 +347,7 @@ class Feature_Controller extends Controller {
 				}
 			}
 		}
+
 		return implode('',$returnTemplate);
 	}	
 	
