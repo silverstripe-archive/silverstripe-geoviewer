@@ -1,0 +1,18 @@
+{
+	"name": "silverstripe-labs/geoviewer",
+	"description": "GeoMapping Module for SilverStripe.",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe-labs", "geoviewer", "geomapping"],
+	"authors": [
+	{
+		"name": "Rainer Spittel",
+		"email": "rainer@silverstripe.com"
+	}
+	],
+	"minimum-stability": "dev",
+	"require":
+	{
+		"silverstripe/framework": "2.4.*",
+		"silverstripe-labs/commandpattern": "dev-master"
+	}
+}
