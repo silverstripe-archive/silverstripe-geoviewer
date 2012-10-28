@@ -1,4 +1,4 @@
-var options = {layers: '$LayerName' , format: '$Format', transparent: $isTransparent };
+var options = {layers: '$LayerName', title: '$Title', format: '$Format', transparent: $isTransparent };
 
 <% if Storage.UseMultiCache %>
 var urlArray = ["$Storage.Cache_URL_01",
