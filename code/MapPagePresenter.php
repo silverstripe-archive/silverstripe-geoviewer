@@ -56,16 +56,4 @@ class MapPagePresenter extends ViewableData {
 		return $model->renderWith('JS_MapPage');
 	}
 	
-}	function GoogleMapAPIKey() {
-		global $googlemap_api_keys;
-		$environment = Director::get_environment_type();
-
-		$api_key = null;
-		$host = $_SERVER['HTTP_HOST'];
-		if (isset($googlemap_api_keys["$environment"])) {
-			$api_key = $googlemap_api_keys["$environment"];
-		} elseif (isset($googlemap_api_keys[$host])) {
-			$api_key = $googlemap_api_keys[$host];
-		}
-		return $api_key;
-	}	
+}
