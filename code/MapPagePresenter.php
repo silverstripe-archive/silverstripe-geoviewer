@@ -13,6 +13,8 @@
 class MapPagePresenter extends ViewableData {
 
 	private $modulePath = 'geoviewer';
+	
+	private $openlayers_path = '/thirdparty/OpenLayers-2.12/lib/OpenLayers.js';
 
 	function getModulePath() {
 		return $this->modulePath;
@@ -20,6 +22,14 @@ class MapPagePresenter extends ViewableData {
 
 	function setModulePath($value) {
 		$this->modulePath = $value;
+	}
+
+	function get_openlayers_path() {
+		return $this->openlayers_path;
+	}
+	
+	function set_openlayers_path($value) {
+		$this->openlayers_path = $value;
 	}
 		
 	function getCSSFiles() {
@@ -46,7 +56,7 @@ class MapPagePresenter extends ViewableData {
 		return $model->renderWith('JS_MapPage');
 	}
 	
-	function GoogleMapAPIKey() {
+}	function GoogleMapAPIKey() {
 		global $googlemap_api_keys;
 		$environment = Director::get_environment_type();
 
@@ -59,4 +69,3 @@ class MapPagePresenter extends ViewableData {
 		}
 		return $api_key;
 	}	
-}
