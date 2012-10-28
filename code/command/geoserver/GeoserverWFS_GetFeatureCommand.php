@@ -12,6 +12,10 @@
  */
 class GeoserverWFS_GetFeatureCommand extends ControllerCommand {
 
+	public function getServiceURL($layer) {
+		return $layer->Storage()->URL_WFS;
+	}
+
 	/**
 	 *
 	 * @param Layer $layer
@@ -22,8 +26,8 @@ class GeoserverWFS_GetFeatureCommand extends ControllerCommand {
 	 * @throws GeoserverWFS_GetFeatureCommand_Exception
 	 */
 	public function getRequest($layer, $featureID) {
-		$geoserver_url = $layer->Storage()->URL_WFS;
-		$geoserver_url = str_replace("http://","",$geoserver_url);
+		$url = $this->getServiceURL($layer);
+		$url = str_replace("http://","",$url);
 
 		$data = new ArrayData(array(
 			'Layer' => $layer,
@@ -37,7 +41,7 @@ class GeoserverWFS_GetFeatureCommand extends ControllerCommand {
 		$body = $data->renderWith('GeoserverWFS_GetFeature');
 		$request = new SS_HTTPRequest(
 			'POST',
-			$geoserver_url,
+			$url,
 			$getvars,
 			null,
 			$body
