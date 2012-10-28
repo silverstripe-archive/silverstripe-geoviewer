@@ -13,14 +13,14 @@
  * @author Rainer Spittel (rainer at silverstripe dot com)
  */
 class GetFeatureJsonParser extends GetFeatureParser implements IGetFeatureParser {
-	
-	/**
-	 * 
-	 * @throws OLFeature_Controller_Exception
-	 * 
-	 * @param string $value the body of the response text.
-	 * @return DataObjectSet
-	 */
+
+    /**
+     *
+     *
+     * @param string $value the body of the response text.
+     * @throws Exception
+     * @return DataObjectSet
+     */
 	public function parse($value) {
 		$features = array();
 		
