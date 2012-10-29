@@ -145,7 +145,6 @@ class MapPageExtension extends DataExtension {
 	 * @return String
 	 */
 	function CategoriesCacheKey() {
-	
 		$curr = Controller::curr();
 		$request = $curr->getRequest();
 		
@@ -159,5 +158,4 @@ class MapPageExtension extends DataExtension {
 		));
 	}
 	
-
 }
