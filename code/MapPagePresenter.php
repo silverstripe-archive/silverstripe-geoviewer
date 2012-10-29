@@ -34,19 +34,18 @@ class MapPagePresenter extends ViewableData {
 		
 	function getCSSFiles() {
 		$value = array(
-			$this->getModulePath().'/css/MapStyle.css', // CSS for MapStyles
-			$this->getModulePath().'/css/MapPage.css', // CSS for MapPage
-			$this->getModulePath().'/css/layout.css', // CSS for Map Bubble
-			$this->getModulePath().'/css/LayerList.css' // CSS for MapLayer list
+			$this->getModulePath().'/css/mapstyle.css', // CSS for MapStyles
+			$this->getModulePath().'/css/layout.css',   // CSS for Map Bubble
+			$this->getModulePath().'/css/layerlist.css' // CSS for MapLayer list
 		);
 		return $value;
 	}
 
 	function getJavaScriptFiles() {
 		$js_files = array(
-			'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-			$this->getModulePath().'/thirdparty/jquery.entwine/dist/jquery.entwine-dist.js',
-			$this->getModulePath().'/thirdparty/jquery.metadata/jquery.metadata.js',
+			THIRDPARTY_DIR . '/jquery/jquery.js',
+			THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js',
+			THIRDPARTY_DIR . '/jquery.metadata/jquery.metadata.js'
 		);
 		return $js_files;
 	}
