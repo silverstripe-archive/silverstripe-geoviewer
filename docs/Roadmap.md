@@ -4,6 +4,7 @@
 
 #### DONE
 
+* Upgraded to support SilverStripe 3.0 (3.0.2)
 * Full GeoServer support (WMS and WFS) for mapping applications. 
 * Enable backend users to administer the map layers and create new map instances.
 * Ability to add GoogleMaps and OpenStreetMap layers
@@ -17,8 +18,7 @@
 #### OUTSTANDING
 
 * Using OGC APIs to connect to backend systems to retrieve data from remote servers.
-* Support EPSG:4326 and EPSG:900913 projections out of the box.
-* Ability to load GWC tiles, GeoServer WFS and GeoServer WMS services
+* Ability to load GWC tiles, MapServer WFS and MapServer WMS services
 
 ### Beta release
 
