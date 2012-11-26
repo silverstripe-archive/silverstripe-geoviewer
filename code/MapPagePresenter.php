@@ -13,6 +13,8 @@
 class MapPagePresenter extends ViewableData {
 
 	private $modulePath = 'geoviewer';
+	
+	private $openlayers_path = '/thirdparty/OpenLayers-2.12/lib/OpenLayers.js';
 
 	function getModulePath() {
 		return $this->modulePath;
@@ -20,6 +22,14 @@ class MapPagePresenter extends ViewableData {
 
 	function setModulePath($value) {
 		$this->modulePath = $value;
+	}
+
+	function get_openlayers_path() {
+		return $this->openlayers_path;
+	}
+	
+	function set_openlayers_path($value) {
+		$this->openlayers_path = $value;
 	}
 		
 	function getCSSFiles() {
@@ -41,22 +51,21 @@ class MapPagePresenter extends ViewableData {
 		return $js_files;
 	}
 
+	function getJavaScriptMapExtensionsFiles() {
+		$js_files = array(
+			$this->getModulePath()."/javascript/MapWrapper.js",
+			$this->getModulePath().'/javascript/LayerList.js',
+			$this->getModulePath()."/javascript/WMSFeatureInfo.js",
+			$this->getModulePath()."/javascript/WFSFeatureInfo.js",
+			$this->getModulePath()."/javascript/MapPopup.js",
+			$this->getModulePath()."/javascript/control/GeoserverGetFeatureInfo.js"
+		);
+		return $js_files;		
+	}
+
 	function getJavaScript($model) {
 		$this->failover = $model;		
 		return $model->renderWith('JS_MapPage');
 	}
 	
-	function GoogleMapAPIKey() {
-		global $googlemap_api_keys;
-		$environment = Director::get_environment_type();
-
-		$api_key = null;
-		$host = $_SERVER['HTTP_HOST'];
-		if (isset($googlemap_api_keys["$environment"])) {
-			$api_key = $googlemap_api_keys["$environment"];
-		} elseif (isset($googlemap_api_keys[$host])) {
-			$api_key = $googlemap_api_keys[$host];
-		}
-		return $api_key;
-	}	
 }

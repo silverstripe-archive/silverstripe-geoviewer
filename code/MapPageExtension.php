@@ -14,8 +14,6 @@ class MapPageExtension extends DataExtension {
 
 	static $map_presenter_class = 'MapPagePresenter';
 	
-	static $openlayers_path = '/thirdparty/OpenLayers-2.12/lib/OpenLayers.js';
-	
 	static $has_one = array (
 		'MapObject' => 'MapObject'
 	);
@@ -27,15 +25,6 @@ class MapPageExtension extends DataExtension {
 	static function set_map_presenter_class($value) {
 		self::$map_presenter_class = $value;
 	}
-
-	static function get_openlayers_path() {
-		return self::$openlayers_path;
-	}
-	
-	static function set_openlayers_path($value) {
-		self::$openlayers_path = $value;
-	}
-		
 
 	/**
 	 * Update the CMS fields, adding some descriptions and text fields to 
@@ -79,16 +68,9 @@ class MapPageExtension extends DataExtension {
 			Requirements::javascript($file);
 		}
 
-		Requirements::javascript($presenter->getModulePath().$this->get_openlayers_path());
+		Requirements::javascript($presenter->getModulePath().$presenter->get_openlayers_path());
 
-		$js_files = array(
-			$presenter->getModulePath()."/javascript/MapWrapper.js",
-			$presenter->getModulePath().'/javascript/LayerList.js',
-			$presenter->getModulePath()."/javascript/WMSFeatureInfo.js",
-			$presenter->getModulePath()."/javascript/WFSFeatureInfo.js",
-			$presenter->getModulePath()."/javascript/MapPopup.js",
-			$presenter->getModulePath()."/javascript/control/GeoserverGetFeatureInfo.js"
-		);
+		$js_files = $presenter->getJavaScriptMapExtensionsFiles();
 		foreach($js_files as $file) {
 			Requirements::javascript($file);
 		}
