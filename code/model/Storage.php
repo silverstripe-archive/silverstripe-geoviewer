@@ -18,4 +18,12 @@ class Storage extends DataObject {
 		"FeatureTypes" => "FeatureType"
 	);
 
+
+	public function getWMSURL() {
+		return $this->URL;
+	}
+
+	public function getWFSURL() {
+		return $this->URL_WFS;
+	}
 }
