@@ -6,7 +6,7 @@
 
 ## Requirements ##
 
- * SilverStripe V2.4
+ * SilverStripe V3.0.x
  * CommandPattern module git@github.com:silverstripe-labs/silverstripe-commandpattern.git)
 
 ## Documentation ##
@@ -14,8 +14,20 @@
 
 ## Installation Instructions ##
 
-Add this module into your project folder (name geoviewer) and run a dev/build
-to generate the required database schema.
+Add this module (geoviewer)  and the command pattern module into your project folder and 
+run a dev/build to generate the required database schema.
+
+After the installation, you have full GeoViewer support for creating web map applications
+supporting Google, OpenStreetMap, GeoServer and KML/GML data sources.
+
+To create a demo dataset (map and page configuration), run the MapDemoBuildTask develoment task:
+
+- http://{your_ip_address}/ss3_viewer/dev/tasks/MapDemoBuildTask
+
+You find two new page types (in draft mode) with two maps demonstrating Google Maps and GeoServer
+data integration.
+
+The module supports simple theme out of the box but can be customised if required.
 
 ## Usage Overview ##
 
@@ -28,11 +40,7 @@ to generate the required database schema.
 * Map Icons by Momenticons under the Creative Commons Attribution (by) license.
   [ http://findicons.com/icon/261402/flag_blue?id=261402# ]
 
-* Third-party libraries: OpenLayers v2.10
-
-* Third-party libraries: jQuery, jQuery-UI, jQuery-metadata
-
-* Third-party libraries: jQuery Entwine
+* Third-party libraries: OpenLayers v2.12
 
 ## License ##
 
