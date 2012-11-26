@@ -104,6 +104,7 @@ class Feature_Controller extends Controller {
 	 * @return ArrayList
 	 */
 	public function mapOGC2ORM($features) {
+		Deprecation::notice('3.0', 'mapOGC2ORM not used anymore.');
 		$response = new ArrayList();
 		
 		if (!$features) {
