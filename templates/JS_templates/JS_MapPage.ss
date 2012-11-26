@@ -23,7 +23,6 @@
 
 				var center = new OpenLayers.LonLat($Long, $Lat);
 				var center = center.transform(map.displayProjection, map.projection);
-				
 		 		map.setCenter(center, $ZoomLevel );
 
 				OpenLayers.ProxyHost="Proxy/dorequest?u=";
