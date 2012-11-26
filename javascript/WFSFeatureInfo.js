@@ -17,7 +17,6 @@
 				//
 				// enable all vector layers to be selectable via one controller.
 				var layers = map.getBy('layers','isVector',true);
-				
 				this.activateLayers(layers);
 			},
 
@@ -64,6 +63,11 @@
 				OpenLayers.Event.stop(event);
 				
 				this.setSelectedFeature( feature );
+
+				if (feature.layer.getFeatureInfo != undefined) {
+					feature.layer.getFeatureInfo(control, feature);
+					return false;
+				}
 
 				var featureIDList = new Array();
 				if (feature.cluster) {
