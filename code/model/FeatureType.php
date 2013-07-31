@@ -46,7 +46,7 @@ class FeatureType extends DataObject {
 		$result = $this->Name;
 		
 		if ($this->Namespace) {
-			$result = $this->Namespace.":".$result;
+			$result = $this->Title." (".$this->Namespace.":".$result.")";
 		}
 		return $result;
 	}
