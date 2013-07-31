@@ -81,7 +81,7 @@ class GeoserverModel {
 			$name = $list[1];
 
 			$items = DataObject::get('FeatureType');
-			$items->where("Name = '$name' AND Namespace = '$namespace' AND StorageID = '".$this->storage->ID."'");
+			$items->where("\"Name\" = '$name' AND \"Namespace\" = '$namespace' AND \"StorageID\" = '".$this->storage->ID."'");
 
 			if ($items->count() == 0) {
 				$this->createFeatureType($name, $namespace, $title);

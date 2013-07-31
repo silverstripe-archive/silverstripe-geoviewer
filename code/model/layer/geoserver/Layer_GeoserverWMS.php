@@ -36,7 +36,7 @@ class Layer_GeoserverWMS extends Layer_WMS {
 	      'LayerName'
 	);
 	
-	static $default_sort = "Title ASC, LayerName ASC";
+	static $default_sort = '"Title" ASC, "LayerName" ASC';
 	
 	function getJavaScript() {
 		return $this->renderWith('JS_Layer_GeoserverWMS');

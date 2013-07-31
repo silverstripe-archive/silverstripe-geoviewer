@@ -67,7 +67,7 @@ class Layer extends DataObject {
 		
 		if ($this->hasMethod('Storage')) {
 
-			$featuretypeList = DataObject::get("FeatureType","StorageID = '".$this->StorageID."'");
+			$featuretypeList = DataObject::get("FeatureType","\"StorageID\" = '".$this->StorageID."'");
 			$map = $featuretypeList->map("ID","FeatureTypeName");
 			$featuretypes = new CheckboxSetField(
 				$name = 'FeatureTypes',

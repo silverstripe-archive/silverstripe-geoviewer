@@ -86,7 +86,7 @@ class MapPageExtension extends DataExtension {
 		}
 		// we need to add call to js maps somehow, any better way?
 		if ($this->owner->MapObjectID) {
-			$googleCheck = DataObject::get_one('Layer_GoogleMap',"\"MapID\" = ".$this->owner->MapObjectID." AND \"Enabled\" = 1");
+			$googleCheck = DataObject::get_one('Layer_GoogleMap','"MapID" = '.$this->owner->MapObjectID.' AND "Enabled" = 1');
 			if($googleCheck){
 				Requirements::javascript("http://maps.google.com/maps/api/js?v=3&amp;sensor=false");
 			}

@@ -25,7 +25,7 @@ class Layer_GoogleMap extends Layer {
 		'GMapTypeName' =>  "Enum(array('Satellite','Map','Terrain','Hybrid'),'Satellite')",
 	);
 
-	static $default_sort = "Title ASC, GMapTypeName ASC";
+	static $default_sort = '"Title" ASC, "GMapTypeName" ASC';
 	
 	public function getCMSFields($params = null) {
 		$fields = parent::getCMSFields($params);
