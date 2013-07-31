@@ -62,8 +62,10 @@ class MapDemoBuilder {
 		$layers = $style->WFSLayers();
 		$layers->add($layer_wfs);
 
-		$featureType =  $this->createFeatureType();
+		$featureType =  $this->createFeatureType('NewYork-POI');
 		$featureType->LayerID = $layer_wfs->ID;
+		$featureType->StorageID = $storage->ID;
+
 		$featureType->write();
 
 		$page = new MapPage();
@@ -71,6 +73,9 @@ class MapDemoBuilder {
 		$page->MapObjectID = $map->ID;
 		$page->write();
 		$page->doPublish();
+
+		$map->MapPageID = $page->ID;
+		$map->write();
 	}
 
 	public function createGoogleMapDemo($storage, $category) {
@@ -94,8 +99,9 @@ class MapDemoBuilder {
 		$layers = $style->WFSLayers();
 		$layers->add($layer_wfs);
 
-		$featureType =  $this->createFeatureType();
+		$featureType =  $this->createFeatureType('GoogleMaps-POI');
 		$featureType->LayerID = $layer_wfs->ID;
+		$featureType->StorageID = $storage->ID;
 		$featureType->write();
 
 		$page = new MapPage();
@@ -103,6 +109,9 @@ class MapDemoBuilder {
 		$page->MapObjectID = $map->ID;
 		$page->write();
 		$page->doPublish();
+
+		$map->MapPageID = $page->ID;
+		$map->write();
 	}
 	
 	/**
@@ -139,10 +148,11 @@ class MapDemoBuilder {
 		return $category;
 	}
 	
-	public function createFeatureType() {
+	public function createFeatureType($title) {
 		$featureType = new FeatureType();
 		$featureType->Namespace = 'tiger';
 		$featureType->Name = 'poi';
+		$featureType->Title = $title;
 		$featureType->FeatureTypeTemplate = <<<HTML
 <% if Message %>
 <div class='message'>\$Message</div>
