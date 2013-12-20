@@ -1,0 +1,17 @@
+{
+        "name": "silverstripe/geoviewer",
+        "description": "The GeoViewer module enables SilverStripe to embed maps from different data sources into any page-type",
+        "type": "silverstripe-module",
+        "license": "BSD-3-Clause",
+        "keywords": ["silverstripe", "openlayers", "mapping"],
+        "authors": [{
+                "name": "Rainer Spittel",
+                "email": "fb3rasp@gmail.com"
+        }],
+        "require":
+        {
+                "silverstripe/cms": "3.1.*",
+                "silverstripe/framework": "3.1.*",
+                "silverstripe/commandpattern": "3.0.0"
+        }
+}
