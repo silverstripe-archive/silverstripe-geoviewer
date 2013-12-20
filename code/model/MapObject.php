@@ -75,9 +75,9 @@ class MapObject extends DataObject {
 	
 	function getCategories() {
 		$dataList = new DataList('LayerCategory');
-		$dataList->where(sprintf('"Layer"."ID" IS NOT NULL AND "MapID" = %d', $this->ID));
-		$dataList->sort(array("Sort" => "ASC", "Title" => "ASC"));
-		$dataList->leftJoin("Layer",'"LayerCategory"."ID" = "Layer"."LayerCategoryID"');
+		$dataList = $dataList->where(sprintf('"Layer"."ID" IS NOT NULL AND "MapID" = %d', $this->ID));
+		$dataList = $dataList->sort(array("Sort" => "ASC", "Title" => "ASC"));
+		$dataList = $dataList->leftJoin("Layer",'"LayerCategory"."ID" = "Layer"."LayerCategoryID"');
 		
 		return $dataList;
 	}
