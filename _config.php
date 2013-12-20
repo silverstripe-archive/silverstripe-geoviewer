@@ -11,11 +11,11 @@ Proxy_Controller::set_allowed_host(array(
 
 Object::add_extension('MapPage', 'MapPageExtension');
 
-
-$file_extensions = File::$allowed_extensions;
-$file_extensions[] = 'kml';
-$file_extensions[] = 'kmz';
-File::$allowed_extensions = $file_extensions;
+//
+//$file_extensions = File::$allowed_extensions;
+//$file_extensions[] = 'kml';
+//$file_extensions[] = 'kmz';
+//File::$allowed_extensions = $file_extensions;
 
 /** 
  * Add to .htaccess file in assets following lines:
