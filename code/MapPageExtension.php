@@ -31,19 +31,21 @@ class MapPageExtension extends DataExtension {
 	 * the Browse Page catalogue page.
 	 */
 	function updateCMSFields(FieldList $fields) {
-
 		$items = array();
 		$maps  = DataObject::get("MapObject");
 		if ($maps) $items = $maps->map('ID','Title');
 
-		$fields->addFieldsToTab("Root.Main", 
+		$dropdown = new DropdownField("MapObjectID", "Map Object", $items, $this->owner->MapObjectID);
+		$dropdown->setHasEmptyDefault(true);
+		$fields->addFieldsToTab("Root.Main",
 			array(
 				new LiteralField("MapLabel","<h2>Map Selection</h2>"),
 				// Display parameters
-				new CompositeField( 
-					new CompositeField( 
+				new CompositeField(
+					new CompositeField(
 						new LiteralField("DefLabel","<h3>Default OpenLayers Map</h3>"),
-						new DropdownField("MapObjectID", "Map Object", $items, $this->owner->MapObjectID, null, true)
+						$dropdown
+
 					)
 				)
 			)
@@ -88,7 +90,8 @@ class MapPageExtension extends DataExtension {
 		if ($this->owner->MapObjectID) {
 			$googleCheck = DataObject::get_one('Layer_GoogleMap','"MapID" = '.$this->owner->MapObjectID.' AND "Enabled" = 1');
 			if($googleCheck){
-				Requirements::javascript("http://maps.google.com/maps/api/js?v=3&amp;sensor=false");
+				Requirements::javascript("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false");
+//				Requirements::javascript("http://maps.google.com/maps/api/js?v=3&amp;sensor=false");
 			}
 		}
 		Requirements::customScript($presenter->getJavaScript($this->owner->data()));
@@ -140,15 +143,19 @@ class MapPageExtension extends DataExtension {
 	function CategoriesCacheKey() {
 		$curr = Controller::curr();
 		$request = $curr->getRequest();
-		
-		$LayerCategory = new DataList("LayerCategory");
+
+		// change orm behaviour which breaks when using PostGreSQL
+		// using MAX on a datalist which has a default sort defined in the dataobject.
+		$datalist = new DataList("LayerCategory");
+		$query = $datalist->dataQuery();
+		$query = $query->sort();
+
 		$layer = new DataList("Layer");
 		return implode('-', array(
-			$this->owner->MapObject()->ID, 
-			$LayerCategory->Max("LastEdited"),
+			$this->owner->MapObject()->ID,
+			$query->Max("LastEdited"),
 			$layer->Max("LastEdited"),
 			$request->getVar('layers')
 		));
 	}
-	
 }
