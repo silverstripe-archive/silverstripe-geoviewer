@@ -12,11 +12,15 @@
  */
 class MapModelAdmin extends ModelAdmin {
 
-	static $menu_title = "Maps and Styles";
+	private static $menu_title = "Maps and Styles";
 	
-	static $url_segment = "maps";
+	private static $menu_icon = 'geoviewer/images/16x16/mapicon.png';
 
-	static $managed_models = array(
+	private static $url_segment = "maps";
+
+	public $showImportForm = false;
+
+	private static $managed_models = array(
 		"MapObject",
 		"StyleMap",
 		"LayerCategory"

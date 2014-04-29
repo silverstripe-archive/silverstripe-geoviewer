@@ -16,6 +16,10 @@ class OGCModelAdmin extends ModelAdmin {
 	
 	static $url_segment = "maplayers";
 
+	private static $menu_icon = 'geoviewer/images/16x16/mapicon.png';
+
+	public $showImportForm = false;
+
 	static $managed_models = array(
 		"Layer_GoogleMap",
 		"Layer_OpenStreetMap",
